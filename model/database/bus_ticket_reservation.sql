@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2019 at 11:49 AM
+-- Generation Time: Nov 13, 2019 at 10:30 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -33,7 +33,7 @@ CREATE TABLE `account` (
   `account_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `name_lastname` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `e-mail` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `e_mail` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `phone_number` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `admin` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -42,7 +42,7 @@ CREATE TABLE `account` (
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`ID`, `account_name`, `password`, `name_lastname`, `e-mail`, `phone_number`, `admin`) VALUES
+INSERT INTO `account` (`ID`, `account_name`, `password`, `name_lastname`, `e_mail`, `phone_number`, `admin`) VALUES
 (1, 'karlosusac', '123', 'Karlo Sušac', 'karlosusac@gmai.com', '063-111-111', 1),
 (2, 'igorvasic', '321', 'Igor Vasić', 'igorvasic@gmail.com', '063-222-222', 1),
 (3, 'anaanic', '213', 'Ana Anić', 'anaanic@gmail.com', '063-333-333', 0),
@@ -200,7 +200,8 @@ CREATE TABLE `ticket` (
 --
 
 INSERT INTO `ticket` (`ID`, `account_id`, `schedule_id`, `autobusline_id`, `stops_line_start_id`, `stops_line_stop_id`, `valid_date`) VALUES
-(1, 1, 19, 1, 1, 6, '2019-11-06');
+(1, 1, 19, 1, 1, 6, '2019-11-06'),
+(2, 2, 5, 3, 1, 9, '2019-11-14');
 
 --
 -- Indexes for dumped tables
@@ -212,7 +213,7 @@ INSERT INTO `ticket` (`ID`, `account_id`, `schedule_id`, `autobusline_id`, `stop
 ALTER TABLE `account`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `account_name` (`account_name`),
-  ADD UNIQUE KEY `e-mail` (`e-mail`);
+  ADD UNIQUE KEY `e-mail` (`e_mail`);
 
 --
 -- Indexes for table `autobus_line`
@@ -290,7 +291,7 @@ ALTER TABLE `stops_line`
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
