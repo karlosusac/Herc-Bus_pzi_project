@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2019 at 09:32 AM
+-- Generation Time: Nov 13, 2019 at 11:49 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -120,6 +120,7 @@ INSERT INTO `schedule` (`ID`, `start_time`, `stop_time`, `number_of_seats`, `dir
 CREATE TABLE `stops` (
   `ID` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `zone` int(11) NOT NULL DEFAULT 1,
   `position_x` float(10,6) NOT NULL,
   `position_y` float(10,6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -128,17 +129,17 @@ CREATE TABLE `stops` (
 -- Dumping data for table `stops`
 --
 
-INSERT INTO `stops` (`ID`, `name`, `position_x`, `position_y`) VALUES
-(1, 'Vrh Avenije', 43.351955, 17.801451),
-(2, 'Ekonomska škola', 43.346813, 17.799950),
-(3, 'Španjolski trg', 43.343651, 17.807203),
-(4, 'Ortiješ', 43.265862, 17.835772),
-(5, 'Buna', 43.250278, 17.836960),
-(6, 'Žitomislići', 43.206551, 17.793585),
-(7, 'Hodbina', 43.231480, 17.851431),
-(8, 'Kolonija', 43.322701, 17.820341),
-(9, 'Aluminij', 43.280354, 17.831245),
-(10, 'Bačevići', 43.271332, 17.823334);
+INSERT INTO `stops` (`ID`, `name`, `zone`, `position_x`, `position_y`) VALUES
+(1, 'Vrh Avenije', 1, 43.351955, 17.801451),
+(2, 'Ekonomska škola', 1, 43.346813, 17.799950),
+(3, 'Španjolski trg', 1, 43.343651, 17.807203),
+(4, 'Ortiješ', 2, 43.265862, 17.835772),
+(5, 'Buna', 2, 43.250278, 17.836960),
+(6, 'Žitomislići', 3, 43.206551, 17.793585),
+(7, 'Hodbina', 2, 43.231480, 17.851431),
+(8, 'Kolonija', 2, 43.322701, 17.820341),
+(9, 'Aluminij', 2, 43.280354, 17.831245),
+(10, 'Bačevići', 3, 43.271332, 17.823334);
 
 -- --------------------------------------------------------
 
