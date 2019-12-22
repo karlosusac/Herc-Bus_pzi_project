@@ -3,6 +3,6 @@
 $controller = isset($_GET["controller"]) ? $_GET["controller"] : "login";
 $method = isset($_GET["method"]) ? $_GET["method"] : "index";
 
-//include ("controller/$controller.php");
+include ("controller/$controller.php");
 $object = new $controller();
 $object->$method();

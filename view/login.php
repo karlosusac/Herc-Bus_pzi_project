@@ -34,18 +34,18 @@
                                 <p><?php print($error); ?></p>
                             </div>
                             <?php } ?>
-                            <form action="index.php?kontoler=Login&metoda=index" method="POST">
+                            <form action="index.php?controller=Login&method=index" method="POST">
                                 <div class="form-group row">
-                                    <label for="korisnickoime" class="col-md-4 col-form-label text-md-right">Username</label>
+                                    <label for="loginAccountName" class="col-md-4 col-form-label text-md-right">Username</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="korisnickoime" class="form-control" name="korisnickoime" required autofocus>
+                                        <input type="text" id="loginAccountName" class="form-control" name="loginAccountName" required autofocus>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">Lozinka</label>
+                                    <label for="loginPassword" class="col-md-4 col-form-label text-md-right">Lozinka</label>
                                     <div class="col-md-6">
-                                        <input type="password" id="lozinka" class="form-control" name="lozinka" required>
+                                        <input type="password" id="loginPassword" class="form-control" name="loginPassword" required>
                                     </div>
                                 </div>
 

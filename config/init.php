@@ -4,7 +4,7 @@
     define("DB_HOST", "127.0.0.1");
     define("DB_USER", "root");
     define("DB_PASS", "");
-    define("DB_DATABASE", "pzi");
+    define("DB_DATABASE", "herc-bus_database");
 
     // -------------------------- Gibs an error for some reason when called, need to look into it --------------------------
     //Path to the root of the server folder
