@@ -1,51 +1,53 @@
-<!doctype html>
-<html lang="en">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand ml-3" href="index.php?controller=Frontpage&method=index">Herc-Bus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="//fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <title>Log in</title>
-</head>
-
-<body>
-    <main class="login-form mt-5">
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="index.php?controller=Frontpage&method=index">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Schedule</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Buy a Ticket</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php?controller=Login&method=index">Log in</a>
+        </li>
+        </ul>
+    </div>
+    </nav>
+    
+    
+    <main class="login-form mt-5" data-aos="fade-in">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">Prijavite se</div>
+                    <div class="card shadow">
+                        <div class="card-header">Log in</div>
                         <div class="card-body">
-                            <?php if (isset($error)) { ?>
+                            <?php if (isset($error)){ ?>
                             <div class="alert alert-danger">
-                                <b>Nastala je pogreška:</b>
+                                <strong>Error:</strong>
                                 <p><?php print($error); ?></p>
                             </div>
                             <?php } ?>
                             <form action="index.php?controller=Login&method=index" method="POST">
                                 <div class="form-group row">
-                                    <label for="loginAccountName" class="col-md-4 col-form-label text-md-right">Username</label>
+                                    <label for="accountName" class="col-md-4 col-form-label text-md-right">Username</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="loginAccountName" class="form-control" name="loginAccountName" required autofocus>
+                                        <input type="text" id="accountName" class="form-control" name="accountName" required autofocus>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="loginPassword" class="col-md-4 col-form-label text-md-right">Lozinka</label>
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
                                     <div class="col-md-6">
-                                        <input type="password" id="loginPassword" class="form-control" name="loginPassword" required>
+                                        <input type="password" id="password" class="form-control" name="password" required>
                                     </div>
                                 </div>
 
@@ -54,6 +56,10 @@
                                         Log in
                                     </button>
                                 </div>
+
+                                <div class="form-group row">
+                                    <p class="col-md-12 col-form-label text-md-left">Don't have an account? <a href="index.php?controller=Register&method=index">Register</a></p>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -61,6 +67,3 @@
             </div>
         </div>
     </main>
-</body>
-
-</html>

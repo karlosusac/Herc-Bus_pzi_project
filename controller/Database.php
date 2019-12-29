@@ -3,6 +3,7 @@
         private static $_instance;
         private $_connection;
 
+        //Privatni konstruktor za bazu u kojem koristimo naše konstante iz config file-a
         private function __construct (){
             $this->_connection = new PDO("mysql:host=". DB_HOST. ";dbname=". DB_DATABASE, DB_USER, DB_PASS);
             $this->_connection->setAttribute(
@@ -11,8 +12,7 @@
             );
         }
 
-        //Set connection with the database, if database is not set, call the constructor and set it
-        //and return the the instance, if it is already set, just return in
+        //Singleton za kreiranje instance baze, ako je paza postavljena vrati je u suprotnom je napravi tako što pozovemo konstruktor pa je onda vratimo
         public static function setInstance(){
             if(!isset($_instance)){
                 self::$_instance = new Database;
@@ -21,7 +21,7 @@
             return self::$_instance;
         }
 
-        //Return database connection, this is needed in all the query-s
+        //Metoda koja vraća vezu sa bazom, potrebno u query-ima
         public function getConnection(){
             return $this->_connection;
         }

@@ -1,71 +1,89 @@
 <?php
 
-session_start();
-
 class Login extends Controller {
-    public static $user;
+    public static $account;
 
     public function index () {
-        if(isset($_POST["loginAccountName"])){
+        //Ako je postavljen id u session, korisnik nema šta tražiti na login page-u tako da ga šaljemo na Frontpage
+        if(isset($_SESSION["id"])){
+            header("Location: index.php?controller=Frontpage&method=index");
+            die();
+        }
+
+        //Ako je u POST-u poslan accountName, dakle poslana je forma za login te se spremamo vertificirati poslane podatke;
+        if(isset($_POST["accountName"])){
             try {
-                $user = new Account($_POST["loginAccountName"], $_POST["loginPassword"]);
-                self::loginUser($user);
-                print("Login successful!!!");
-            } catch (Exception $e) {
-                $this->load(
-                    "login", 
-                    "view", 
-                    array("error" => $e->getMessage())
-                );
+                //Kreiramo novog korisnika od poslanih podataka da bi smo ga mogli vertificirati
+                $account = new Account($_POST["accountName"], $_POST["password"]);
+
+                //U loginUser metodi provjeravamo dali uopće postoji poslani accountName te dali password odgovara,
+                //Ako je sve ok, onda šaljemo user-a na frontpage sa svojim podacima
+                self::loginUser($account);
+
+                $this->load("headerAndFooterMain/header", "view");
+                $this->load("frontpage", "view", array("accountName" => $account->getAccountName()));
+                $this->load("headerAndFooterMain/footer", "view");
+
+            } catch (Exception $exception) {
+                //Ako je došlo do neke greške 'vrći user-a nazad na login i display-aj error message
+                $this->load("headerAndFooterMain/header", "view");
+                $this->load("login", "view", array("error" => $exception->getMessage()));
+                $this->load("headerAndFooterMain/footer", "view");
             }
         } else {
+            
+            //Ako nisu poslani podaci u POST-u, znači da je user tek došao na login page
+            $this->load("headerAndFooterMain/header", "view");
             $this->load("login", "view");
+            $this->load("headerAndFooterMain/footer", "view");
         }
         
     }
 
-    public static function loginUser ($user){
-        //Get account_id from given accountName and Password if it exists
+    public static function loginUser ($account){
+        //Prvo nam treba id account-a kojeg dohvaćamo iz account_name-a, i provjeravamo dali uneseni password odgovara
         $query = self::$database_instance->getConnection()->prepare("SELECT id
                                                                     FROM account
                                                                     WHERE account_name = ? AND password = ?");
         
-        $query->execute([$user->getAccountName(), $user->getPassword()]);
-        //We save account id as an object in a user variable(if it exists)
-        $user = $query->fetch(PDO::FETCH_OBJ);
+        $query->execute([$account->getAccountName(), $account->getPassword()]);
+        //Zatim podatke koje smo dohvatili spremamo u varijablu $account
+        $account = $query->fetch(PDO::FETCH_OBJ);
         
-        if ($user){
-            //If user exists we will create new session_id and assign it it's unique id and timestamp
+        if ($account){
+            //Ako smo izvukli neke podatke iz baze, znači da account postoji, sada ćemo useru-u dati kriptirani id i spremiti ga u sessiju
             $query = self::$database_instance->getConnection()->prepare("INSERT INTO session_id (id, login_date, account_id) VALUES (NULL, NOW(), ?)");
-            $query->execute([$user->id]);
+            $query->execute([$account->id]);
 
-            //We need to take latest session_id id from the database so we can assign it it's unique token
+            //Napravili smo novu instancu za 'session_id' koja nam čuva kriptirani id, id korisnika koji je log in-an i timestamp kada je se log-irao
             $query = self::$database_instance->getConnection()->prepare("SELECT id
                                                                         FROM session_id
                                                                         WHERE account_id = ?
                                                                         ORDER BY login_date DESC
                                                                         LIMIT 1");
-            $query->execute([$user->id]);
+            $query->execute([$account->id]);
             
-            //We got the id now we make token out of the one of the values from the salt array and it's id
+            //Sa gore navedenim query-om uzimamo id iz 'session_id' jer ćemo ga koristiti za kriptiranje
             $sessionId = $query->fetch(PDO::FETCH_OBJ);
+            //Ovo su nam salt-ovi koje također koristimo za kriptiranje
             $salt = ["Sarma", "Japrak", "Grah", "Mohune", "Pileca Juha", "Grashak"];
+            //Sada kriptiramo id iz 'session_id'-a i na njega dodamo random 'čorbu' iz $salt-a te i njega kriptiramo i sve spajamo u jedan string koji nam predstavlja našu kriptirani session ili $token
             $token = md5($sessionId->id). md5($salt[array_rand($salt)]);
 
-            //Updateing session_id row with the token
+            //Sad ubacimo natrag u bazu naš token koji smo napravili i spremimo ga u sessiju
             $query = self::$database_instance->getConnection()->prepare("UPDATE session_id SET token = ? WHERE id = ?");
             $query->execute([$token, $sessionId->id]);
-
 
             $_SESSION["id"] = $token;
 
             return true;
         } else {
-            throw new Exception("Error, entered values are incorrect.");
+            throw new Exception("Incorrect username or password.");
             return false;
         }
     }
 
+    //Statična metoda za dohvaćanje account_id-a iz kriptiranog session id-a ili $token-a
     public static function decryptSessionId(){
         $query = self::$database_instance->getConnection()->prepare("SELECT account_id
                                                             FROM session_id
@@ -75,40 +93,38 @@ class Login extends Controller {
         return $accountId->account_id;
     }
 
+    //Metoda za uništavanje sessije prilikom logout-a
     public static function logout(){
-        unset($_SESSION["id"]);
-        session_destroy();
+        if(isset($_SESSION["id"])){
+            unset($_SESSION["id"]);
+            session_destroy();
+        }
     }
 
+    //Metoda koja dohvaća account iz session-a
     public static function check_login (){
-        $id = intval($_SESSION['id']);
         
-        //STARTED, NEEDS TO BE FINISHED
-        $query = $database_instance->getConnection()->prepare("SELECT *
+        $id = self::decryptSessionId();
+
+        $query = self::$database_instance->getConnection()->prepare("SELECT *
                                                             FROM account
                                                             WHERE id = ?");
-        $query->execute();
-        //-------
+        $query->execute([intval($id)]);
+        $user = $query->fetch(PDO::FETCH_OBJ);
 
-        $sql = "SELECT * FROM korisnik";
-        $sql += " WHERE id=" . $id;
-
-        $konekcija = self::$baza->getConnection();
-        $rezultat = $konekcija->query($sql);
-        $objekt = $rezultat->fetch();
-
-        if (count($objekt) == 0) {
-            throw new Exception("Nastala je pogreška: Korisnik nije prijavljen.");
+        if(!($user)){
+            throw new Exception("Account is not loged in.");
         } else {
-            self::$user = new Account(
-                $objekt["korisnickoime"],
-                $objekt["lozinka"],
-                $objekt["id"],
-                $objekt["ime"],
-                $objekt["prezime"],
-                $objekt["email"]
+            Login::$account = new Account(
+                $user->account_name,
+                $user->password,
+                $user->name,
+                $user->lastname,
+                $user->e_mail,
+                $user->phone_number
             );
         }
+
     }
     
 }
