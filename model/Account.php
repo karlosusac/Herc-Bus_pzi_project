@@ -12,7 +12,7 @@ class Account {
 
     public function __construct ($accountName, $password, $name = "", $lastname = "",  $email = "", $phoneNumber = "", $admin = 0){
         $this->_accountName = $accountName;
-        $this->_password = ($password);
+        $this->_password = $password;
         $this->_name = $name;
         $this->_lastname = $lastname;
         $this->_email = $email;

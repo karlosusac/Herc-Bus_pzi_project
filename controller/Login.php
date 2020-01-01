@@ -12,6 +12,7 @@ class Login extends Controller {
 
         //Ako je u POST-u poslan accountName, dakle poslana je forma za login te se spremamo vertificirati poslane podatke;
         if(isset($_POST["accountName"])){
+            $_POST["password"] = str_replace(' ', '', $_POST["password"]);
             try {
                 //Kreiramo novog korisnika od poslanih podataka da bi smo ga mogli vertificirati
                 $account = new Account($_POST["accountName"], $_POST["password"]);

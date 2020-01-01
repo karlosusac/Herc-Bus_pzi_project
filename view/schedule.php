@@ -60,7 +60,7 @@
           <?php foreach ($al->stops as $stop){ ?>
             <li class="list-inline-item">&sdot;</li>
             <li class="list-inline-item">
-              <a href="index.php?controller=BuyTicket&method=index&autobusLine=<?php print($al->ID); ?>&destination=<?php print($stop->id); ?>"><?php print($stop->name); ?></a>
+              <a href="#"><?php print($stop->name); ?></a>
             </li>
             <?php } ?>
           </ul>

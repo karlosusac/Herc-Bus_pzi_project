@@ -14,7 +14,7 @@
                         $this->load("singleLineSchedule", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $autobusLine));
                         $this->load("headerAndFooterMain/footer", "view");
                     } else {
-                        $this->load("headerAndFooterMain/header", "view",);
+                        $this->load("headerAndFooterMain/header", "view");
                         $this->load("singleLineSchedule", "view", array("autobusLine" => $autobusLine));
                         $this->load("headerAndFooterMain/footer", "view");
                     } 

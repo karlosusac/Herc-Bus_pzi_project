@@ -10,7 +10,9 @@
 
             //Ako su podaci poslani ali ako se polje za unos password-a razlikuje jedno od drugog ili ako je prazno vrati ga na register page, sa error-om
             if(isset($_POST["accountName"])){
-                if($_POST["password"] != $_POST["conPassword"] || $_POST["password"] = ""){
+                $_POST["password"] = str_replace(' ', '', $_POST["password"]);
+                $_POST["conPassword"] = str_replace(' ', '', $_POST["conPassword"]);
+                if($_POST["password"] != $_POST["conPassword"] || $_POST["password"] == ""){
                     $this->load("headerAndFooterMain/header", "view");
                     $this->load("register", "view", array("error" => "Passwords do not match."));
                     $this->load("headerAndFooterMain/footer", "view");
