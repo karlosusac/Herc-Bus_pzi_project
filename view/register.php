@@ -10,7 +10,7 @@
             <a class="nav-link" href="index.php?controller=Frontpage&method=index">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Schedule</a>
+            <a class="nav-link" href="index.php?controller=Schedule&method=index">Schedule</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Buy a Ticket</a>
@@ -98,4 +98,4 @@
             </div>
         </div><br><br>
     </main>
-    <script src="asts/javaScript/register.js"></script>
+    <script src="asts/javaScript/registerPasswordValidation.js"></script>

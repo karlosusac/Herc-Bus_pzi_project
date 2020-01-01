@@ -49,6 +49,10 @@ class Account {
     public function getPhoneNumber(){
         return $this->_phoneNumber;
     }
+
+    public function getAdmin(){
+        return $this->_admin;
+    }
     //------------------------------
 
     //SETTERS
@@ -78,5 +82,9 @@ class Account {
 
     public function setPhoneNumber($phoneNumber) {
         $this->_phoneNumber = $phoneNumber;
+    }
+
+    public function setAdmin($admin) {
+        $this->_admin = $admin;
     }
 }

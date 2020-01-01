@@ -13,8 +13,16 @@ function isPassOk(){
         passInput.classList.add("is-invalid");
         confPassInput.classList.add("is-invalid");
         return(false);
-    }else{
+    } else {
         passInput.classList.remove("is-invalid");
         confPassInput.classList.remove("is-invalid");
+    }
+
+    if((passInput.value == confPassInput.value) && (passInput.value != "")){
+        passInput.classList.add("is-valid");
+        confPassInput.classList.add("is-valid");
+    } else {
+        passInput.classList.remove("is-valid");
+        confPassInput.classList.remove("is-valid");
     }
 }

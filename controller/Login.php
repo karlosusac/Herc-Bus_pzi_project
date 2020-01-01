@@ -121,7 +121,8 @@ class Login extends Controller {
                 $user->name,
                 $user->lastname,
                 $user->e_mail,
-                $user->phone_number
+                $user->phone_number,
+                $user->admin
             );
         }
 
