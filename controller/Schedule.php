@@ -24,20 +24,24 @@
 
         //Dohvaća sve postojuće linije
         public static function getAllLines(){
+            $autobusLines = [];
+            
             $query = self::$database_instance->getConnection()->prepare("SELECT *
                                                                         FROM autobus_line");
             $query->execute();
-            
-            $autobusLines = $query->fetchAll(PDO::FETCH_OBJ);
+            $results = $query->fetchAll(PDO::FETCH_OBJ);
 
-            foreach ($autobusLines as $autobusLine){
-                $autobusLine->stops = Schedule::getAllStopsForASingleAutobusLine($autobusLine->ID);
-                $autobusLine->scheduleForward = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->ID, 1);
-                $autobusLine->scheduleBackwards = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->ID, 0);
+            foreach($results as $result){
+                $autobusLine = new AutobusLine($result->start, $result->stop);
+                $autobusLine->setId($result->ID);
+                
+                $autobusLine->setStops(Schedule::getAllStopsForASingleAutobusLine($autobusLine->getId()));
+                $autobusLine->setScheduleForward(Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 1));
+                $autobusLine->setScheduleBackward(Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 0));
+                array_push($autobusLines, $autobusLine);
             }
 
             return $autobusLines;
-            
         }
 
         //Dohvati sve stanice od autobusne linije čiji id proslijedimo

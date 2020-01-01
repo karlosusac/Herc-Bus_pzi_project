@@ -37,14 +37,14 @@
 <div class="container">
   <div class="card text-center mt-4 shadow-sm" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="400">
     <div class="card-header bg-dark text-white">
-        <?php print($autobusLine->start. " - ". $autobusLine->stop);?>
+        <?php print($autobusLine->getStart(). " - ". $autobusLine->getStop());?>
     </div>
     <div class="card-body">
         <?php if(isset($autobusLine->startTime)) {?>
             <?php if($autobusLine->direction == 1){ ?>
-                <h5 class="card-title">Direction: <?php print($autobusLine->start. " - ". $autobusLine->stop);?></h5>
+                <h5 class="card-title">Direction: <?php print($autobusLine->getStart(). " - ". $autobusLine->getStop());?></h5>
             <?php } else { ?>
-                <h5 class="card-title">Direction: <?php print($autobusLine->stop. " - ". $autobusLine->start);?></h5>
+                <h5 class="card-title">Direction: <?php print($autobusLine->getStop(). " - ". $autobusLine->getStart());?></h5>
             <?php } ?>
         <p class="card-text">List of all autobus drives:</p>
         <?php foreach ($autobusLine->scheduleForward as $sf){ ?>

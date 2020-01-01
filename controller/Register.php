@@ -61,9 +61,9 @@
                                                                                 FROM account
                                                                                 WHERE account_name LIKE ? OR e_mail LIKE ?");
                 $query->execute([$_POST["accountName"], $_POST["email"]]);
-                $results = $query->fetchAll();
+                $results = $query->fetchAll(PDO::FETCH_OBJ);
 
-                if(count($results) == 0){
+                if(empty($results)){
                     $query = self::$database_instance->getConnection()->prepare("INSERT INTO account (id, account_name, name, lastname, e_mail, password, phone_number, admin) VALUES (NULL, ?, ?, ?, ?, ?, ?, 0)");
                     $query->execute([$account->getAccountName(), $account->getName(), $account->getlastname(), $account->getEmail(),$account->getPassword(), $account->getPhoneNumber()]);
                     return true;

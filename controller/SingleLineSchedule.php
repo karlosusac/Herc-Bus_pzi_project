@@ -4,8 +4,7 @@
         public function index(){
             if(isset($_GET["autobusLine"])){
                 if($autobusLine = self::getCurrentlyActiveDrive($_GET["autobusLine"])){ 
-                    if(isset($autobusLine->startTime)){} 
-                    elseif ($autobusLine->nextDrive = self::getNextScheduledDrive($_GET["autobusLine"])) {}
+                    if ($autobusLine->nextDrive = self::getNextScheduledDrive($_GET["autobusLine"])){}
 
                     if(isset($_SESSION["id"])){
                         Login::check_login();
@@ -13,18 +12,16 @@
                         $this->load("headerAndFooterMain/header", "view");
                         $this->load("singleLineSchedule", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $autobusLine));
                         $this->load("headerAndFooterMain/footer", "view");
+                        die();
                     } else {
                         $this->load("headerAndFooterMain/header", "view");
                         $this->load("singleLineSchedule", "view", array("autobusLine" => $autobusLine));
                         $this->load("headerAndFooterMain/footer", "view");
+                        die();
                     } 
-                } else {
-                    header("Location: index.php?controller=Schedule&method=index");
-                }
-                
-            } else {
-                header("Location: index.php?controller=Schedule&method=index");
+                }  
             }
+            header("Location: index.php?controller=Schedule&method=index");
         }
 
         public function logout(){
@@ -38,14 +35,17 @@
                                                                         FROM autobus_line
                                                                         WHERE id = ?");
             $query->execute([$autobusLineId]);
-            $autobusLine = $query->fetch(PDO::FETCH_OBJ);
+            $result = $query->fetch(PDO::FETCH_OBJ);
 
             //Ako postoji autobusna linije onda ćemo u nju staviti sve stanice kojim autobus prolazi i cijeli raspored vožnje za 
             //tu liniju
-            if(!empty($autobusLine)){
-                $autobusLine->stops = Schedule::getAllStopsForASingleAutobusLine($autobusLine->ID);
-                $autobusLine->scheduleForward = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->ID, 1);
-                $autobusLine->scheduleBackwards = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->ID, 0);
+            if(!empty($result)){
+                $autobusLine = new AutobusLine($result->start, $result->stop);
+                $autobusLine->setId($result->ID);
+
+                $autobusLine->stops = Schedule::getAllStopsForASingleAutobusLine($autobusLine->getId());
+                $autobusLine->scheduleForward = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 1);
+                $autobusLine->scheduleBackwards = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 0);
 
                 date_default_timezone_set("Europe/Sarajevo");
                 $timeNow = date( "H:i:s", time());
