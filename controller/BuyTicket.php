@@ -23,23 +23,19 @@
                         $ticket = new Ticket(Login::decryptSessionId(), $schedule->getId(), $_GET["autobusLine"], $_GET["departure"], $_GET["destination"]);
                         
                         if(isset($_POST["date"])){
-                            $date = date("Y-m-d");
-                            $currentMonth = date("m", strtotime($date));
-                            $nextMonth = date("m", strtotime($date. "+1 month"));
-                            if($currentMonth == $nextMonth - 1){
-                                $nextDate = date('Y-m-d', strtotime($date." +1 month"));
-                            }else{
-                                $nextDate = date('Y-m-d', strtotime("last day of next month", strtotime($date)));
-                            }
+                            $dateNow = date("Y-m-d");
+                            $nextDate = date('Y-m-d', strtotime("last day of +2 month", strtotime($dateNow)));
+                            
+                            $date = $_POST["date"];
+                            $time = $schedule->getStartTime();
+                            $ticket->setValidDate(date('Y-m-d H:i:s', strtotime("$date $time")));
 
-                            $ticket->setValidDate($_POST["date"]);
-                            if($ticket->getValidDate() <= $nextDate && ($ticket->getValidDate() >= date("Y-m-d") && $schedule->getStartTime() > date("H:i:s"))){
+                            if($ticket->getValidDate() <= $nextDate && $ticket->getValidDate() >= date("Y-m-d H:i:s")){
                                 if((self::numOfResearvedTickets($ticket->getAutobusLineId(), $ticket->getValidDate())->count) < ($schedule->getNumberOfSeats())){
                                     if(self::makeTicket($ticket->getAccountId(), $ticket->getScheduleId(), $ticket->getDeparture(), $ticket->getDestination(), $ticket->getAutobusLineId(),  $ticket->getValidDate())){
                                         header("Location: index.php?controller=BuyTicket&method=index&success=Ticket researved!");
                                         die();
                                     } else {
-                                        $errorMsg = "Purchase failed.";
                                         header("Location: index.php?controller=BuyTicket&method=index&error=Purchase failed.");
                                         die();
                                     }
