@@ -61,7 +61,7 @@
             <p class="btn btn-primary disabled"><?php print($stop->name);?></p>
           <?php } ?>
         <?php } else { ?>
-          <?php foreach (array_reverse($autobusLine->stops) as $stop){?>
+          <?php foreach (array_reverse($autobusLine->GetAllLineStops()) as $stop){?>
             <p class="btn btn-primary disabled"><?php print($stop->name);?></p>
           <?php } ?>
         <?php } ?>
