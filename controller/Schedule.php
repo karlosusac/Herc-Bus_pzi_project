@@ -35,7 +35,7 @@
                 $autobusLine = new AutobusLine($result->start, $result->stop);
                 $autobusLine->setId($result->ID);
                 
-                $autobusLine->setStops(Schedule::getAllStopsForASingleAutobusLine($autobusLine->getId()));
+                $autobusLine->setAllLineStops(Schedule::getAllStopsForASingleAutobusLine($autobusLine->getId()));
                 $autobusLine->setScheduleForward(Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 1));
                 $autobusLine->setScheduleBackward(Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 0));
                 array_push($autobusLines, $autobusLine);
@@ -46,7 +46,7 @@
 
         //Dohvati sve stanice od autobusne linije čiji id proslijedimo
         public static function getAllStopsForASingleAutobusLine($autobusLineId){
-            $query = self::$database_instance->getConnection()->prepare("SELECT s.name, s.zone, sl.position_order, sl.id
+            $query = self::$database_instance->getConnection()->prepare("SELECT s.name, sl.id
                                                                         FROM stops AS s
                                                                         INNER JOIN stops_line AS sl ON s.id = sl.stops_id
                                                                         WHERE sl.autobus_line_id = ?");

@@ -5,7 +5,9 @@
         private $_stopsId;
         private $_autobusLineId;
 
-        public function __construct($positionOrder, $stopsId, $autobusLineId){
+        private $_stopName;
+
+        public function __construct($positionOrder = "", $stopsId = "", $autobusLineId = ""){
             $this->_positionOrder = $positionOrder;
             $this->_stopsId = $stopsId;
             $this->_autobusLineId = $autobusLineId;
@@ -28,6 +30,10 @@
         public function getAutobusLineId(){
             return $this->_autobusLineId;
         }
+
+        public function getStopName(){
+            return $this->_stopName;
+        }
         //--------------------------------
 
         //SETTERS
@@ -46,6 +52,10 @@
 
         public function setAutobusLineId($autobusLineId){
             $this->_autobusLineId = $autobusLineId;
+        }
+
+        public function setStopName($stopName){
+            return $this->_stopName = $stopName;
         }
     }
 

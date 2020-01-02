@@ -4,16 +4,13 @@
         private $_start;
         private $_stop;
 
-        public $_stops;
-        public $_stopsLine;
-        public $_scheduleForward;
-        public $_scheduleBackward;
+        private $_allLineStops;
+        private $_scheduleForward;
+        private $_scheduleBackward;
 
         public function __construct($start, $stop){
             $this->_start = $start;
             $this->_stop = $stop;
-
-            $this->_stops = new ArrayObject();
         }
 
         //GETTERS
@@ -30,8 +27,8 @@
             return $this->_stop;
         }
 
-        public function getStops(){
-            return $this->_stops;
+        public function getAllLineStops(){
+            return $this->_allLineStops;
         }
 
         public function getScheduleForward(){
@@ -57,8 +54,8 @@
             $this->_stop = $stop;
         }
 
-        public function setStops($stops){
-            $this->_stops = $stops;
+        public function setAllLineStops($stops){
+            $this->_allLineStops = $stops;
         }
 
         public function setScheduleForward($sf){

@@ -13,7 +13,7 @@
         <a class="nav-link" href="index.php?controller=Schedule&method=index">Schedule</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Buy a Ticket</a>
+        <a class="nav-link" href="index.php?controller=BuyTicket&method?index">Buy a Ticket</a>
       </li>
       <?php if(isset($_SESSION["id"])){ ?>
       <li class="nav-item dropdown">
@@ -47,17 +47,17 @@
                 <h5 class="card-title">Direction: <?php print($autobusLine->getStop(). " - ". $autobusLine->getStart());?></h5>
             <?php } ?>
         <p class="card-text">List of all autobus drives:</p>
-        <?php foreach ($autobusLine->scheduleForward as $sf){ ?>
+        <?php foreach ($autobusLine->getScheduleForward() as $sf){ ?>
           <p class="btn <?php SingleLineSchedule::displayCorrectBtn($sf->start_time, $sf->stop_time); ?> disabled"><?php print($sf->start_time). " - ". ($sf->stop_time);?></p>
         <?php } ?>
           <br>
-        <?php foreach ($autobusLine->scheduleBackwards as $sb){ ?>
+        <?php foreach ($autobusLine->getScheduleBackward() as $sb){ ?>
           <p class="btn <?php SingleLineSchedule::displayCorrectBtn($sb->start_time, $sb->stop_time); ?> disabled"><?php print($sb->start_time). " - ". ($sb->stop_time);?></p>
         <?php } ?>
         <br><br>
         <h5 class="card-title">Stops:</h5>
         <?php if($autobusLine->direction == 1){ 
-          foreach ($autobusLine->stops as $stop){?>
+          foreach ($autobusLine->GetAllLineStops() as $stop){?>
             <p class="btn btn-primary disabled"><?php print($stop->name);?></p>
           <?php } ?>
         <?php } else { ?>
@@ -77,11 +77,11 @@
         <?php } elseif(($autobusLine->nextDrive) != false) { ?>
               
             <p class="card-text">List of all autobus drives:</p>
-            <?php foreach ($autobusLine->scheduleForward as $sf){ ?>
+            <?php foreach ($autobusLine->getScheduleForward() as $sf){ ?>
               <p class="btn <?php SingleLineSchedule::displayCorrectBtnForTheNextDrive($sf->start_time, $_GET["autobusLine"]); ?> disabled"><?php print($sf->start_time). " - ". ($sf->stop_time);?></p>
             <?php } ?>
               <br>
-            <?php foreach ($autobusLine->scheduleBackwards as $sb){ ?>
+            <?php foreach ($autobusLine->getScheduleBackward() as $sb){ ?>
               <p class="btn <?php SingleLineSchedule::displayCorrectBtnForTheNextDrive($sb->start_time, $_GET["autobusLine"]); ?> disabled"><?php print($sb->start_time). " - ". ($sb->stop_time);?></p>
             <?php } ?>
             <br><br>

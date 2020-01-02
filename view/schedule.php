@@ -13,7 +13,7 @@
         <a class="nav-link" href="index.php?controller=Schedule&method=index">Schedule</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Buy a Ticket</a>
+        <a class="nav-link" href="index.php?controller=BuyTicket&method?index">Buy a Ticket</a>
       </li>
       <?php if(isset($_SESSION["id"])){ ?>
       <li class="nav-item dropdown">
@@ -57,10 +57,10 @@
       <div class="card-body">
       <div class="col-12 h-100 text-center text-lg-left my-auto">
           <ul class="list-inline mb-2">
-          <?php foreach ($al->getStops() as $stop){ ?>
+          <?php foreach ($al->getAllLineStops() as $stop){ ?>
             <li class="list-inline-item">&sdot;</li>
             <li class="list-inline-item">
-              <a href="#"><?php print($stop->name); ?></a>
+              <a href="http://localhost/Herc-Bus_project/index.php?controller=BuyTicket&method=index&autobusLine=<?php print($al->getId()); ?>&destination=<?php print($stop->id); ?>"><?php print($stop->name); ?></a>
             </li>
             <?php } ?>
           </ul>

@@ -43,32 +43,14 @@
                 $autobusLine = new AutobusLine($result->start, $result->stop);
                 $autobusLine->setId($result->ID);
 
-                $autobusLine->stops = Schedule::getAllStopsForASingleAutobusLine($autobusLine->getId());
-                $autobusLine->scheduleForward = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 1);
-                $autobusLine->scheduleBackwards = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 0);
-
-                date_default_timezone_set("Europe/Sarajevo");
-                $timeNow = date( "H:i:s", time());
+                $autobusLine->setAllLineStops(Schedule::getAllStopsForASingleAutobusLine($autobusLine->getId()));
+                $autobusLine->setScheduleForward(Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 1));
+                $autobusLine->setScheduleBackward(Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 0));
                 
-                //Pronalazi trenutnu vožnji i sprema te podatke, POTREBAN REWORK
-                foreach ($autobusLine->scheduleForward as $sf){
-                    if($sf->start_time < $timeNow && $sf->stop_time > $timeNow){
-                        $autobusLine->startTime = $sf->start_time;
-                        $autobusLine->stopTime = $sf->stop_time;
-                        $autobusLine->direction = 1;
-                        break;
-                    }
-                }
-
-                foreach ($autobusLine->scheduleBackwards as $sb){
-                    if($sb->start_time < $timeNow && $sb->stop_time > $timeNow){
-                        $autobusLine->startTime = $sb->start_time;
-                        $autobusLine->stopTime = $sb->stop_time;
-                        $autobusLine->direction = 0;
-                        break;
-                    }
-                }
-            
+                //Pronalazi trenutnu vožnji i sprema te podatke
+                self::checkIfDriveIsActive($autobusLine, $autobusLine->getScheduleForward(), 1);
+                self::checkIfDriveIsActive($autobusLine, $autobusLine->getScheduleBackward(), 0);
+                
                 return $autobusLine;
             } else {
                 return false;
@@ -130,6 +112,23 @@
             } else {
                 print("btn-outline-primary");
             }
+        }
+
+        //Vraća nam trenutnu vožnju
+        public static function checkIfDriveIsActive($autobusLine, $schedule, $direction){
+            date_default_timezone_set("Europe/Sarajevo");
+            $timeNow = date( "H:i:s", time());
+
+            foreach ($schedule as $s){
+                if($s->start_time < $timeNow && $s->stop_time > $timeNow){
+                    $autobusLine->startTime = $s->start_time;
+                    $autobusLine->stopTime = $s->stop_time;
+                    $autobusLine->direction = $direction;
+                    break;
+                }
+            }
+
+            return $autobusLine;
         }
     }
 ?>

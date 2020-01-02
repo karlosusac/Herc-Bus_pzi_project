@@ -13,7 +13,7 @@
             <a class="nav-link" href="index.php?controller=Schedule&method=index">Schedule</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Buy a Ticket</a>
+            <a class="nav-link" href="index.php?controller=BuyTicket&method?index">Buy a Ticket</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="index.php?controller=Login&method=index">Log in</a>

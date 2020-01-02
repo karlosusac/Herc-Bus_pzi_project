@@ -4,13 +4,21 @@
         private $_accountId;
         private $_scheduleId;
         private $_autobusLineId;
-        private $_stopsLineStartId;
-        private $_stopsLineStopId;
+        private $_departure;
+        private $_destination;
         private $_validDate;
         private $_purchased;
+        private $_price;
+
+        public function __construct($accountId, $scheduleId, $autobusLineId, $departure, $destination){
+            $this->_accountId = $accountId;
+            $this->_scheduleId = $scheduleId;
+            $this->_autobusLineId = $autobusLineId;
+            $this->_departure = $departure;
+            $this->_destination = $destination;
+        }
 
         //GETTERS
-
         public function getId(){
             return $this->_id;
         }
@@ -27,12 +35,12 @@
             return $this->_autobusLineId;
         }
 
-        public function getStopsLineStartId(){
-            return $this->_stopsLineStartId;
+        public function getDeparture(){
+            return $this->_departure;
         }
 
-        public function getStopsLineStopId(){
-            return $this->_stopsLineStopId;
+        public function getDestination(){
+            return $this->_destination;
         }
 
         public function getValidDate(){
@@ -41,6 +49,10 @@
 
         public function getPurchased(){
             return $this->_purchased;
+        }
+
+        public function getPrice(){
+            return $this->_price;
         }
         //----------------------------
 
@@ -62,12 +74,12 @@
             $this->_autobusLineId = $autobusLineId;
         }
 
-        public function setStopsLineStartId($stopsLineStartId){
-            $this->_stopsLineStartId = $stopsLineStartId;
+        public function setDeparture($departure){
+            $this->_departure = $departure;
         }
 
-        public function setStopsLineStopId($stopsLineStopId){
-            $this->_stopsLineStopId = $stopsLineStopId;
+        public function setDestination($destination){
+            $this->_destination = $destination;
         }
         
         public function setValidDate($validDate){
@@ -76,6 +88,10 @@
 
         public function setPurchased($purchased){
             $this->_purchased = $purchased;
+        }
+
+        public function setPrice($price){
+            $this->_price = $price;
         }
     }
 ?>
