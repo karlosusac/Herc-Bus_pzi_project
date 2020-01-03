@@ -10,7 +10,7 @@
                 Login::check_login();
                 
                 if(isset($_GET["schedule"]) && isset($_GET["destination"]) && isset($_GET["departure"]) && isset($_GET["autobusLine"])){
-                    if(self::validateDirections($_GET["destination"], $_GET["departure"], $_GET["schedule"]) == false){
+                    if(self::validateSchedule($_GET["destination"], $_GET["departure"], $_GET["schedule"]) == false){
                         header("Location: index.php?controller=BuyTicket&method=index&error=Invalid inputs!");
                         die();
 
@@ -31,7 +31,7 @@
                             $ticket->setValidDate(date('Y-m-d H:i:s', strtotime("$date $time")));
 
                             if($ticket->getValidDate() <= $nextDate && $ticket->getValidDate() >= date("Y-m-d H:i:s")){
-                                if((self::numOfResearvedTickets($ticket->getAutobusLineId(), $ticket->getValidDate())->count) < ($schedule->getNumberOfSeats())){
+                                if((self::numOfResearvedTickets($ticket->getAutobusLineId(), $ticket->getValidDate(), $ticket->getScheduleId())->count) < ($schedule->getNumberOfSeats())){
                                     if(self::makeTicket($ticket->getAccountId(), $ticket->getScheduleId(), $ticket->getDeparture(), $ticket->getDestination(), $ticket->getAutobusLineId(),  $ticket->getValidDate())){
                                         header("Location: index.php?controller=BuyTicket&method=index&success=Ticket researved!");
                                         die();
@@ -84,7 +84,6 @@
                         die();
                     }
                     
-                    //HERE
                 } elseif(isset($_GET["autobusLine"])){
                     $stops = Schedule::getAllStopsForASingleAutobusLine($_GET["autobusLine"]);
 
@@ -102,6 +101,7 @@
             }
         }
 
+        //Vraća sve linije, njihove vožnje i stanice
         public static function getAllLines(){
             $query = self::$database_instance->getConnection()->prepare("SELECT *
                                                                         FROM autobus_line");
@@ -119,6 +119,7 @@
             
         }
 
+        //Vraća niz stanica koje nisu odabrane, koristi se za odabir mjesta polaska (departure) kod kupnje ticket-a
         public static function getRestOfStops($autobusLine, $stopId){
             $query = self::$database_instance->getConnection()->prepare("SELECT s.name, s.zone, sl.position_order, sl.id
                                                                         FROM stops AS s
@@ -130,6 +131,7 @@
             return $query->fetchAll(PDO::FETCH_OBJ);
         }
 
+        //Vraća smjer vožnje ovisno o unesenim stanicama
         public static function compareStops($stop1Id, $stop2Id){
             $stop1 = self::getStopInfo($stop1Id);
             $stop2 = self::getStopInfo($stop2Id);
@@ -141,6 +143,7 @@
             }
         }
 
+        //Vraća podatke pojedine stanice
         public static function getStopInfo($stopsLineId){
             $query = self::$database_instance->getConnection()->prepare("SELECT s.name, s.zone, sl.position_order
                                                                         FROM stops AS s
@@ -150,7 +153,8 @@
             return $query->fetch(PDO::FETCH_OBJ);
         }
 
-        public static function validateDirections($dir1, $dir2, $scheduleId){
+        //Validificira da unesena vožnja postoji za unesene stanice
+        public static function validateSchedule($dir1, $dir2, $scheduleId){
             $direction = self::compareStops($dir1, $dir2);
 
             $query = self::$database_instance->getConnection()->prepare("SELECT start_time
@@ -174,6 +178,8 @@
             }
         }
 
+        //Potvrđuje da su uneseni podaci korektni, da unesena autobusna linija ima u sebi obje stanice, zatim ovisno o
+        //smjeru potvrđuje da su stanice korektno postavljenje (da su je jeda ispred ili iza druge, ovisno o smjeru vožnje)
         public static function validateAutobusLine($autobusLine, $dir1, $dir2, $direction){
             $query = self::$database_instance->getConnection()->prepare("SELECT sl.id, sl.position_order
                                                                         FROM stops_line AS sl
@@ -212,6 +218,7 @@
 
         }
 
+        //Potvrđuje da stanica postoji, (jer se vrijednost može mjenjati iz url-a)
         public static function validateStop($stopId){
             $query = self::$database_instance->getConnection()->prepare("SELECT id
                                                                         FROM stops_line
@@ -225,6 +232,7 @@
             }
         }
 
+        //Query za spremanje ticket-a
         public static function makeTicket($accountId, $scheduleid, $departure, $destination, $autobusLineId, $date){
 
             $query = self::$database_instance->getConnection()->prepare("INSERT INTO ticket (id, purchased, account_id, schedule_id, autobusline_id, departure, destination, valid_date) VALUES (NULL, NOW(), ?, ?, ?, ?, ?, ?)");
@@ -233,6 +241,7 @@
             return true;
         }
 
+        //Računa cijenu iz zona za prosljeđene stanice
         public static function calculatePrice($destinationId, $departureId){
             $destination = self::getStopInfo($destinationId);
             $departure = self::getStopInfo($departureId);
@@ -249,11 +258,12 @@
             }
         }
 
-        public static function numOfResearvedTickets($autobusLine, $validDate){
+        //Vraća broj rezerviranih karta za unsenu vožnju i za uneseni dan
+        public static function numOfResearvedTickets($autobusLine, $validDate, $schedule){
             $query = self::$database_instance->getConnection()->prepare("SELECT COUNT(*) AS count
                                                                         FROM ticket
-                                                                        WHERE account_id = ? AND autobusline_id = ? AND valid_date = ?");
-            $query->execute([Login::decryptSessionId(), intval($autobusLine), $validDate]);
+                                                                        WHERE autobusline_id = ? AND valid_date = date(?) AND schedule_id = ?");
+            $query->execute([intval($autobusLine), $validDate, intval($schedule)]);
             return $query->fetch(PDO::FETCH_OBJ);
         }
     }

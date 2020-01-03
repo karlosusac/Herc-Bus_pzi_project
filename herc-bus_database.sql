@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2019 at 09:04 PM
+-- Generation Time: Jan 03, 2020 at 09:41 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -45,9 +45,8 @@ CREATE TABLE `account` (
 
 INSERT INTO `account` (`ID`, `account_name`, `password`, `name`, `lastname`, `e_mail`, `phone_number`, `admin`) VALUES
 (13, '1', '1', 'Patak', 'Sharko', '1@mail', '', 0),
-(14, 'karlosus', '1', 'Karlo', 'Sušac', '2@mail', '', 0),
-(15, '123', '', '123', '123', '123@mail', '', 0),
-(16, 'test123', '', '123', 'test', 't123@mail', '', 0);
+(14, 'karlosus', '1', 'Karlo', 'Sušac', '2@mail', '', 1),
+(17, 'igorvasic', '1', 'Igor', 'Vasić', 'igorvasic@mail.com', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -109,7 +108,7 @@ INSERT INTO `schedule` (`ID`, `start_time`, `stop_time`, `number_of_seats`, `dir
 (17, '13:40:00', '14:20:00', 45, 1, 1),
 (18, '14:20:00', '15:00:00', 45, 0, 1),
 (19, '18:00:00', '18:40:00', 45, 1, 1),
-(20, '18:40:00', '19:20:00', 45, 0, 1);
+(20, '18:40:00', '23:59:00', 45, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -129,71 +128,8 @@ CREATE TABLE `session_id` (
 --
 
 INSERT INTO `session_id` (`id`, `login_date`, `token`, `account_id`) VALUES
-(75, '2019-12-25 23:16:10', 'd09bf41544a3365a46c9077ebb5e35c381c69420d3496e89430202205ddd99e1', 13),
-(76, '2019-12-25 23:16:13', 'fbd7939d674997cdb4692d34de8633c41c6eb9b727983de061a31a7452cd8656', 13),
-(77, '2019-12-25 23:16:18', '28dd2c7955ce926456240b2ff0100bdecaa9361d616e085aaea7453943e61476', 13),
-(78, '2019-12-25 23:17:32', '35f4a8d465e6e1edc05f3d8ab658c5511c6eb9b727983de061a31a7452cd8656', 13),
-(79, '2019-12-25 23:17:43', 'd1fe173d08e959397adf34b1d77e88d781c69420d3496e89430202205ddd99e1', 13),
-(80, '2019-12-25 23:17:52', 'f033ab37c30201f73f142449d037028d81c69420d3496e89430202205ddd99e1', 13),
-(81, '2019-12-25 23:18:13', '43ec517d68b6edd3015b3edc9a11367b2bd2fc3a30b75ea708875bd15ee72fdd', 13),
-(82, '2019-12-25 23:18:15', '9778d5d219c5080b9a6a17bef029331c1c6eb9b727983de061a31a7452cd8656', 13),
-(83, '2019-12-25 23:20:02', 'fe9fc289c3ff0af142b6d3bead98a9232513ab9e78e8dcb0857bde1ad4612f61', 13),
-(84, '2019-12-25 23:23:06', '68d30a9594728bc39aa24be94b319d212bd2fc3a30b75ea708875bd15ee72fdd', 13),
-(85, '2019-12-25 23:23:09', '3ef815416f775098fe977004015c61931c6eb9b727983de061a31a7452cd8656', 13),
-(86, '2019-12-25 23:23:27', '93db85ed909c13838ff95ccfa94cebd9bafebf4d94ccfe0e4913e9e8e2d51e05', 13),
-(87, '2019-12-25 23:24:06', 'c7e1249ffc03eb9ded908c236bd1996d81c69420d3496e89430202205ddd99e1', 13),
-(88, '2019-12-25 23:25:06', '2a38a4a9316c49e5a833517c45d310702513ab9e78e8dcb0857bde1ad4612f61', 13),
-(89, '2019-12-25 23:27:38', '7647966b7343c29048673252e490f7362bd2fc3a30b75ea708875bd15ee72fdd', 13),
-(90, '2019-12-25 23:27:59', '8613985ec49eb8f757ae6439e879bb2a2513ab9e78e8dcb0857bde1ad4612f61', 13),
-(91, '2019-12-26 20:10:37', '54229abfcfa5649e7003b83dd4755294bafebf4d94ccfe0e4913e9e8e2d51e05', 13),
-(92, '2019-12-26 22:02:36', '92cc227532d17e56e07902b254dfad10caa9361d616e085aaea7453943e61476', 13),
-(93, '2019-12-26 22:04:10', '98dce83da57b0395e163467c9dae521b2513ab9e78e8dcb0857bde1ad4612f61', 13),
-(94, '2019-12-26 22:04:38', 'f4b9ec30ad9f68f89b29639786cb62ef2bd2fc3a30b75ea708875bd15ee72fdd', 13),
-(95, '2019-12-26 22:10:35', '812b4ba287f5ee0bc9d43bbf5bbe87fb2513ab9e78e8dcb0857bde1ad4612f61', 13),
-(96, '2019-12-26 22:11:57', '26657d5ff9020d2abefe558796b995842bd2fc3a30b75ea708875bd15ee72fdd', 13),
-(97, '2019-12-26 22:12:03', 'e2ef524fbf3d9fe611d5a8e90fefdc9ccaa9361d616e085aaea7453943e61476', 13),
-(98, '2019-12-26 22:12:58', 'ed3d2c21991e3bef5e069713af9fa6cacaa9361d616e085aaea7453943e61476', 13),
-(99, '2019-12-26 22:23:30', 'ac627ab1ccbdb62ec96e702f07f6425b81c69420d3496e89430202205ddd99e1', 13),
-(100, '2019-12-26 22:33:44', 'f899139df5e1059396431415e770c6ddcaa9361d616e085aaea7453943e61476', 13),
-(101, '2019-12-26 22:34:58', '38b3eff8baf56627478ec76a704e9b521c6eb9b727983de061a31a7452cd8656', 13),
-(102, '2019-12-26 22:41:27', 'ec8956637a99787bd197eacd77acce5ecaa9361d616e085aaea7453943e61476', 13),
-(103, '2019-12-26 22:45:40', '6974ce5ac660610b44d9b9fed0ff95482bd2fc3a30b75ea708875bd15ee72fdd', 13),
-(104, '2019-12-26 23:13:03', 'c9e1074f5b3f9fc8ea15d152add072941c6eb9b727983de061a31a7452cd8656', 13),
-(105, '2019-12-26 23:13:35', '65b9eea6e1cc6bb9f0cd2a47751a186f2513ab9e78e8dcb0857bde1ad4612f61', 13),
-(106, '2019-12-26 23:15:44', 'f0935e4cd5920aa6c7c996a5ee53a70f2bd2fc3a30b75ea708875bd15ee72fdd', 13),
-(107, '2019-12-26 23:16:17', 'a97da629b098b75c294dffdc3e4639042bd2fc3a30b75ea708875bd15ee72fdd', 13),
-(108, '2019-12-27 11:18:38', 'a3c65c2974270fd093ee8a9bf8ae7d0bbafebf4d94ccfe0e4913e9e8e2d51e05', 13),
-(109, '2019-12-27 12:52:23', '2723d092b63885e0d7c260cc007e8b9d1c6eb9b727983de061a31a7452cd8656', 14),
-(110, '2019-12-27 13:09:56', '5f93f983524def3dca464469d2cf9f3e1c6eb9b727983de061a31a7452cd8656', 14),
-(111, '2019-12-27 16:10:57', '698d51a19d8a121ce581499d7b7016682bd2fc3a30b75ea708875bd15ee72fdd', 14),
-(112, '2019-12-27 19:03:37', '7f6ffaa6bb0b408017b62254211691b52bd2fc3a30b75ea708875bd15ee72fdd', 14),
-(113, '2019-12-27 19:34:51', '73278a4a86960eeb576a8fd4c9ec6997bafebf4d94ccfe0e4913e9e8e2d51e05', 14),
-(114, '2019-12-28 00:05:47', '5fd0b37cd7dbbb00f97ba6ce92bf5add81c69420d3496e89430202205ddd99e1', 14),
-(115, '2019-12-28 11:47:18', '2b44928ae11fb9384c4cf38708677c48caa9361d616e085aaea7453943e61476', 14),
-(116, '2019-12-28 11:57:39', 'c45147dee729311ef5b5c3003946c48f2513ab9e78e8dcb0857bde1ad4612f61', 15),
-(117, '2019-12-28 12:12:32', 'eb160de1de89d9058fcb0b968dbbbd682513ab9e78e8dcb0857bde1ad4612f61', 16),
-(118, '2019-12-28 12:25:37', '5ef059938ba799aaa845e1c2e8a762bdbafebf4d94ccfe0e4913e9e8e2d51e05', 14),
-(119, '2019-12-28 12:29:40', '07e1cd7dca89a1678042477183b7ac3fbafebf4d94ccfe0e4913e9e8e2d51e05', 14),
-(120, '2019-12-28 12:35:30', 'da4fb5c6e93e74d3df8527599fa6264281c69420d3496e89430202205ddd99e1', 14),
-(121, '2019-12-28 18:48:04', '4c56ff4ce4aaf9573aa5dff913df997acaa9361d616e085aaea7453943e61476', 14),
-(122, '2019-12-28 21:40:38', 'a0a080f42e6f13b3a2df133f073095dd81c69420d3496e89430202205ddd99e1', 14),
-(123, '2019-12-29 09:58:41', '202cb962ac59075b964b07152d234b702bd2fc3a30b75ea708875bd15ee72fdd', 14),
-(124, '2019-12-29 11:34:39', 'c8ffe9a587b126f152ed3d89a146b445caa9361d616e085aaea7453943e61476', 14),
-(125, '2019-12-29 13:53:30', '3def184ad8f4755ff269862ea77393ddcaa9361d616e085aaea7453943e61476', 14),
-(126, '2019-12-29 17:15:35', '069059b7ef840f0c74a814ec9237b6eccaa9361d616e085aaea7453943e61476', 14),
-(127, '2019-12-29 17:15:48', 'ec5decca5ed3d6b8079e2e7e7bacc9f21c6eb9b727983de061a31a7452cd8656', 14),
-(128, '2019-12-29 17:15:57', '76dc611d6ebaafc66cc0879c71b5db5c1c6eb9b727983de061a31a7452cd8656', 14),
-(129, '2019-12-29 17:17:25', 'd1f491a404d6854880943e5c3cd9ca25bafebf4d94ccfe0e4913e9e8e2d51e05', 14),
-(130, '2019-12-29 17:18:14', '9b8619251a19057cff70779273e95aa681c69420d3496e89430202205ddd99e1', 14),
-(131, '2019-12-29 17:18:41', '1afa34a7f984eeabdbb0a7d494132ee51c6eb9b727983de061a31a7452cd8656', 14),
-(132, '2019-12-29 19:37:13', '65ded5353c5ee48d0b7d48c591b8f43081c69420d3496e89430202205ddd99e1', 14),
-(133, '2019-12-29 19:41:53', '9fc3d7152ba9336a670e36d0ed79bc431c6eb9b727983de061a31a7452cd8656', 14),
-(134, '2019-12-29 20:01:02', '02522a2b2726fb0a03bb19f2d8d9524d81c69420d3496e89430202205ddd99e1', 14),
-(135, '2019-12-29 20:03:18', '7f1de29e6da19d22b51c68001e7e0e542bd2fc3a30b75ea708875bd15ee72fdd', 14),
-(136, '2019-12-29 20:14:49', '42a0e188f5033bc65bf8d78622277c4e81c69420d3496e89430202205ddd99e1', 14),
-(137, '2019-12-29 20:18:21', '3988c7f88ebcb58c6ce932b957b6f3322bd2fc3a30b75ea708875bd15ee72fdd', 13),
-(138, '2019-12-29 20:20:01', '013d407166ec4fa56eb1e1f8cbe183b9bafebf4d94ccfe0e4913e9e8e2d51e05', 14),
-(139, '2019-12-29 20:44:58', 'e00da03b685a0dd18fb6a08af0923de0caa9361d616e085aaea7453943e61476', 14);
+(190, '2020-01-03 21:40:58', 'cfecdb276f634854f3ef915e2e980c312bd2fc3a30b75ea708875bd15ee72fdd', 14),
+(191, '2020-01-03 21:41:32', '0aa1883c6411f7873cb83dacb17b0afc2513ab9e78e8dcb0857bde1ad4612f61', 13);
 
 -- --------------------------------------------------------
 
@@ -274,10 +210,21 @@ CREATE TABLE `ticket` (
   `account_id` int(11) NOT NULL,
   `schedule_id` int(11) NOT NULL,
   `autobusline_id` int(11) NOT NULL,
-  `stops_line_start_id` int(11) NOT NULL,
-  `stops_line_stop_id` int(11) NOT NULL,
-  `valid_date` date NOT NULL
+  `departure` int(11) NOT NULL,
+  `destination` int(11) NOT NULL,
+  `valid_date` date NOT NULL,
+  `purchased` datetime NOT NULL,
+  `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `ticket`
+--
+
+INSERT INTO `ticket` (`ID`, `account_id`, `schedule_id`, `autobusline_id`, `departure`, `destination`, `valid_date`, `purchased`, `price`) VALUES
+(46, 14, 16, 1, 19, 13, '2020-01-06', '2020-01-03 21:41:07', 0),
+(47, 14, 11, 2, 7, 8, '2020-01-10', '2020-01-03 21:41:17', 0),
+(48, 14, 4, 3, 6, 2, '2020-01-17', '2020-01-03 21:41:26', 0);
 
 --
 -- Indexes for dumped tables
@@ -333,8 +280,8 @@ ALTER TABLE `ticket`
   ADD KEY `ticket_autobus_line_id` (`autobusline_id`),
   ADD KEY `ticket_account_id` (`account_id`),
   ADD KEY `ticket_schedule_id` (`schedule_id`),
-  ADD KEY `ticket_stops_line_start_id` (`stops_line_start_id`),
-  ADD KEY `ticket_stops_line_stop_id` (`stops_line_stop_id`);
+  ADD KEY `ticket_stops_line_start_id` (`departure`),
+  ADD KEY `ticket_stops_line_stop_id` (`destination`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -344,7 +291,7 @@ ALTER TABLE `ticket`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `autobus_line`
@@ -362,7 +309,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT for table `session_id`
 --
 ALTER TABLE `session_id`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=192;
 
 --
 -- AUTO_INCREMENT for table `stops`
@@ -380,7 +327,7 @@ ALTER TABLE `stops_line`
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- Constraints for dumped tables
@@ -412,8 +359,8 @@ ALTER TABLE `ticket`
   ADD CONSTRAINT `ticket_account_id` FOREIGN KEY (`account_id`) REFERENCES `account` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ticket_autobus_line_id` FOREIGN KEY (`autobusline_id`) REFERENCES `autobus_line` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ticket_schedule_id` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ticket_stops_line_start_id` FOREIGN KEY (`stops_line_start_id`) REFERENCES `stops_line` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ticket_stops_line_stop_id` FOREIGN KEY (`stops_line_stop_id`) REFERENCES `stops_line` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `ticket_stops_line_start_id` FOREIGN KEY (`departure`) REFERENCES `stops_line` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ticket_stops_line_stop_id` FOREIGN KEY (`destination`) REFERENCES `stops_line` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
