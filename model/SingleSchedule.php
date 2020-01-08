@@ -1,5 +1,5 @@
 <?php
-    class SingleSchedule{
+    class SingleSchedule extends Controller{
         private $_id;
         private $_startTime;
         private $_stopTime;
@@ -66,6 +66,76 @@
         public function setAutobusLineId($autobusLineId) {
             $this->_autobusLineId = $autobusLineId;
         }
+
+        //CUSTOM
+
+        //Metoda za traženje dali postoji sljedeća vožnja za proslijeđeni id autobusne linije i trenutnog vremena, ako nema
+        //vrati false ako ima nadodaj i trenutni datum na to vrijeme i vrati ga
+        public static function getNextScheduledDrive($autobusLineId){
+            date_default_timezone_set("Europe/Sarajevo");
+            $timeNow = date( "H:i:s", time());
+            $query = self::$database_instance->getConnection()->prepare("SELECT start_time
+                                                                    FROM schedule
+                                                                    WHERE autobus_line_id = ? AND start_time > ?
+                                                                    ORDER BY start_time ASC
+                                                                    LIMIT 1");
+            $query->execute([$autobusLineId, $timeNow]);
+            $schedule = $query->fetch(PDO::FETCH_OBJ);
+            if(empty($schedule)){
+                return false;
+            } else {
+                $date = date("Y-m-d");
+                $dateWithTime = date( "Y-m-d H:i:s", strtotime("$date $schedule->start_time"));
+                return ($dateWithTime);    
+            }
+        }
+
+        //Dohvati sav raspored vožnji (schedule) od autobusne linije čiji id proslijedimo i od smijera kojeg proslijedimo
+        public static function getAllSchedulesForASingleAutobusLine($id, $direction){
+            $query = self::$database_instance->getConnection()->prepare("SELECT *
+                                                                        FROM schedule
+                                                                        WHERE autobus_line_id = ? AND direction = ?
+                                                                        ORDER BY start_time ASC");
+            $query->execute([$id, $direction]);
+            $schedule = $query->fetchAll(PDO::FETCH_OBJ);
+
+            return ($schedule);                                                    
+        }
+
+        //Dohvaća sve iz jednog rasporeda vožnje za koji id mi proslijedimo
+        public static function getAllFromSchedule($scheduleId){
+            $query = self::$database_instance->getConnection()->prepare("SELECT *
+                                                                        FROM schedule
+                                                                        WHERE id = ?");
+            $query->execute([$scheduleId]);
+            return $query->fetch(PDO::FETCH_OBJ);
+        }
+
+        //Validificira da unesena vožnja postoji za unesene stanice
+        public static function validateSchedule($dir1, $dir2, $scheduleId){
+            $direction = StopsLine::compareStops($dir1, $dir2);
+
+            $query = self::$database_instance->getConnection()->prepare("SELECT start_time
+                                                                        FROM schedule
+                                                                        WHERE id = ?");
+            $query->execute([$scheduleId]);
+            $schedule = $query->fetch();
+
+            $query = self::$database_instance->getConnection()->prepare("SELECT sc.start_time
+                                                                        FROM schedule AS sc
+                                                                        INNER JOIN autobus_line AS al ON al.id = sc.autobus_line_id
+                                                                        INNER JOIN stops_line AS sl ON al.ID = sl.autobus_line_id 
+                                                                        WHERE (sc.direction LIKE ?) AND (sl.id LIKE ?)");
+            $query->execute([$direction, $dir1]);
+            $scheduleTimes = $query->fetchAll();
+
+            if(in_array($schedule, $scheduleTimes)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     }   
 
 

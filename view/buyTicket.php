@@ -54,71 +54,71 @@
         <p><?php print($_GET["success"]); ?></p>
       </div>
     <?php } ?>
-      <?php if(isset($_POST["date"])){ ?>
-        <div class="card-body" data-aos="fade-in">
-          <h5 class="card-title">Processing</h5><br>
-          <div class="spinner-border mx-5 my-5" role="status">
-        </div>
+    <?php if(isset($_POST["date"])){ ?>
+      <div class="card-body" data-aos="fade-in">
+        <h5 class="card-title">Processing</h5><br>
+        <div class="spinner-border mx-5 my-5" role="status"></div>
       </div>
       
-      <?php } elseif(isset($_GET["schedule"]) && (isset($_GET["destination"])) && (isset($_GET["departure"]) && (isset($_GET["autobusLine"])))){ ?>
+    <?php } elseif(isset($_GET["schedule"]) && (isset($_GET["destination"])) && (isset($_GET["departure"]) && (isset($_GET["autobusLine"])))){ ?>
 
-        <div class="card-body" data-aos="fade-in">
-          <h5 class="card-title">For when do you want this ticket researved:</h5><br>
-          <form action="index.php?controller=BuyTicket&method=index&autobusLine=<?php print($ticket->getAutobusLineId()); ?>&destination=<?php print($ticket->getDestination()) ?>&departure=<?php print($ticket->getDeparture()); ?>&schedule=<?php print($ticket->getScheduleId()); ?>" method="POST">
-          <input type="date" name="date" class="form-control" style="text-align: center;" required>
-          <br><h5 class="card-title">Ticket price:</h5>
-          <h5 class="card-title"><?php print($ticket->getPrice()); ?> KM</h5>
-            <div class="card-footer bg-white mt-3">
-              <a href="index.php?controller=BuyTicket&method=index" class="btn btn-outline-danger mr-3">Decline</a>  
-              <button type="submit" class="btn btn-outline-primary">Reserve</button>
-            </div>
-          </form>
-        </div>
+      <div class="card-body" data-aos="fade-in">
+        <h5 class="card-title">For when do you want this ticket researved:</h5><br>
+        <form action="index.php?controller=BuyTicket&method=index&autobusLine=<?php print($ticket->getAutobusLineId()); ?>&destination=<?php print($ticket->getDestination()) ?>&departure=<?php print($ticket->getDeparture()); ?>&schedule=<?php print($ticket->getScheduleId()); ?>" method="POST">
+        <input type="date" name="date" class="form-control" style="text-align: center;" required>
+        <small class="text-muted">You can only buy the ticket for 2 months in advance!</small><br>
+        <br><h5 class="card-title">Ticket price:</h5>
+        <h5 class="card-title"><?php print($ticket->getPrice()); ?> KM</h5>
+          <div class="card-footer bg-white mt-3">
+            <a href="index.php?controller=BuyTicket&method=index" class="btn btn-outline-danger mr-3">Decline</a>  
+            <button type="submit" class="btn btn-outline-primary">Reserve</button>
+          </div>
+        </form>
+      </div>
 
-      <?php } elseif(isset($_GET["departure"]) && (isset($_GET["destination"])) && (isset($_GET["autobusLine"]))){ ?>
+    <?php } elseif(isset($_GET["departure"]) && (isset($_GET["destination"])) && (isset($_GET["autobusLine"]))){ ?>
 
-        <div class="card-body" data-aos="fade-in">
-          <h5 class="card-title">Select time:</h5><br>
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <?php foreach ($schedule as $s){ ?>
+      <div class="card-body" data-aos="fade-in">
+        <h5 class="card-title">Select time:</h5><br>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <?php foreach ($schedule as $s){ ?>
             <a class="text-black hover-white btn btn-outline-primary mx-3" name="schedule" href="index.php?controller=BuyTicket&method=index&autobusLine=<?php print($_GET["autobusLine"]); ?>&destination=<?php print($_GET["destination"]) ?>&departure=<?php print($_GET["departure"]); ?>&schedule=<?php print($s->ID); ?>"> <?php print($s->start_time. " - ". $s->stop_time); ?></a>
-            <?php } ?>
-          </div>
+          <?php } ?>
         </div>
+      </div>
         
-      <?php } elseif(isset($_GET["destination"]) && (isset($_GET["autobusLine"]))){ ?>
+    <?php } elseif(isset($_GET["destination"]) && (isset($_GET["autobusLine"]))){ ?>
 
-        <div class="card-body" data-aos="fade-in">
-          <h5 class="card-title">Select departure place:</h5><br>
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <?php foreach ($stops as $stop){ ?>
+      <div class="card-body" data-aos="fade-in">
+        <h5 class="card-title">Select departure place:</h5><br>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <?php foreach ($stops as $stop){ ?>
             <a class="text-black hover-white btn btn-outline-primary mx-3" name="departure" href="index.php?controller=BuyTicket&method=index&autobusLine=<?php print($_GET["autobusLine"]); ?>&destination=<?php print($_GET["destination"]) ?>&departure=<?php print($stop->id); ?>"> <?php print($stop->name); ?></a>
-            <?php } ?>
-          </div>
+          <?php } ?>
         </div>
+      </div>
 
-      <?php } elseif(isset($_GET["autobusLine"])){ ?>
+    <?php } elseif(isset($_GET["autobusLine"])){ ?>
 
-        <div class="card-body" data-aos="fade-in">
-          <h5 class="card-title">Select destination:</h5><br>
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <?php foreach ($stops as $stop){ ?>
+      <div class="card-body" data-aos="fade-in">
+        <h5 class="card-title">Select destination:</h5><br>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <?php foreach ($stops as $stop){ ?>
             <a class="text-black hover-white btn btn-outline-primary mx-3" name="destination" href="index.php?controller=BuyTicket&method=index&autobusLine=<?php print($_GET["autobusLine"]); ?>&destination=<?php print($stop->id); ?>"> <?php print($stop->name); ?></a>
-            <?php } ?>
-          </div>
+          <?php } ?>
         </div>
+      </div>
 
-      <?php } else { ?>
+    <?php } else { ?>
 
-        <div class="card-body" data-aos="fade-in">
-          <h5 class="card-title">Select an autobus line:</h5><br>
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <?php foreach ($autobusLine as $al){ ?>
-            <a class="text-black hover-white btn btn-outline-primary mx-3" name="autobusLine" href="index.php?controller=BuyTicket&method=index&autobusLine=<?php print($al->ID); ?>"> <?php print($al->start. " - ". $al->stop) ?></a>
-            <?php } ?>
-          </div>
+      <div class="card-body" data-aos="fade-in">
+        <h5 class="card-title">Select an autobus line:</h5><br>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <?php foreach ($autobusLine as $al){ ?>
+            <a class="text-black hover-white btn btn-outline-primary mx-3" name="autobusLine" href="index.php?controller=BuyTicket&method=index&autobusLine=<?php print($al->getId()); ?>"> <?php print($al->getStart(). " - ". $al->getStop()) ?></a>
+          <?php } ?>
         </div>
+      </div>
 
-      <?php }?>
+    <?php }?>
 </div>

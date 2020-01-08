@@ -37,80 +37,80 @@
 <h3 class="text-center mt-4 mb-4" data-aos="fade-down">Daily Schedule</h3>
 
 <?php foreach ($autobusLine as $al){ ?>
-<div class="accordion shadow" id="accordion" data-aos="fade-up">
-  <div class="card">
-    <div class="card-header" id="headingeOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<?php print($al->getId()); ?>" aria-expanded="true" aria-controls="collapseOne">
-          <?php print($al->getStart(). " - ". $al->getStop());?>
-        </button>
-        <?php if(isset($admin) && ($admin == true)){ ?>
-          <a href="index.php?controller=SingleLineSchedule&method=index&autobusLineId=<?php print($al->getId()); ?>" class="btn btn-primary float-right">Edit</a>
-          <a href="index.php?controller=SingleLineSchedule&method=index&autobusLine=<?php print($al->getId()); ?>" class="btn btn-primary mr-2 float-right">View</a>
-        <?php } else { ?>
-          <a href="index.php?controller=SingleLineSchedule&method=index&autobusLine=<?php print($al->getId()); ?>" class="btn btn-primary float-right">View</a>
-        <?php } ?>
-      </h5>
-    </div>
+  <div class="accordion shadow" id="accordion" data-aos="fade-up">
+    <div class="card">
+      <div class="card-header" id="headingeOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<?php print($al->getId()); ?>" aria-expanded="true" aria-controls="collapseOne">
+            <?php print($al->getStart(). " - ". $al->getStop());?>
+          </button>
+          <?php if(isset($admin) && ($admin == true)){ ?>
+            <a href="index.php?controller=SingleLineSchedule&method=index&autobusLineId=<?php print($al->getId()); ?>" class="btn btn-primary float-right">Edit</a>
+            <a href="index.php?controller=SingleLineSchedule&method=index&autobusLine=<?php print($al->getId()); ?>" class="btn btn-primary mr-2 float-right">View</a>
+          <?php } else { ?>
+            <a href="index.php?controller=SingleLineSchedule&method=index&autobusLine=<?php print($al->getId()); ?>" class="btn btn-primary float-right">View</a>
+          <?php } ?>
+        </h5>
+      </div>
 
-    <div id="collapse<?php print($al->getId()); ?>" class="collapse" aria-labelledby="headingeOne" data-parent="#accordion">
-      <div class="card-body">
-      <div class="col-12 h-100 text-center text-lg-left my-auto">
-          <ul class="list-inline mb-2">
-          <?php foreach ($al->getAllLineStops() as $stop){ ?>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="http://localhost/Herc-Bus_project/index.php?controller=BuyTicket&method=index&autobusLine=<?php print($al->getId()); ?>&destination=<?php print($stop->id); ?>"><?php print($stop->name); ?></a>
-            </li>
-            <?php } ?>
-          </ul>
-        </div>
-        
-        <hr class="col-12">
-
-        <table class="col-md-6 h-100 text-center text-lg-left my-auto">
-            <caption style="caption-side: top;" >Direction: <?php print($al->getStart(). " - ". $al->getStop());?></caption>
-            <tr>
-            <th>Departure Time</th>
-                <?php foreach ($al->getScheduleForward() as $sf){ ?>
-                    <td><p><?php print($sf->start_time); ?></p></td>
+      <div id="collapse<?php print($al->getId()); ?>" class="collapse" aria-labelledby="headingeOne" data-parent="#accordion">
+        <div class="card-body">
+          <div class="col-12 h-100 text-center text-lg-left my-auto">
+              <ul class="list-inline mb-2">
+                <?php foreach ($al->getAllLineStops() as $stop){ ?>
+                  <li class="list-inline-item">&sdot;</li>
+                  <li class="list-inline-item">
+                    <a href="http://localhost/Herc-Bus_project/index.php?controller=BuyTicket&method=index&autobusLine=<?php print($al->getId()); ?>&destination=<?php print($stop->id); ?>"><?php print($stop->name); ?></a>
+                  </li>
                 <?php } ?>
-            </tr>
+              </ul>
+          </div>
+          
+          <hr class="col-12">
 
-            <tr>
-            <th>Arrival Time</th>
-                <?php foreach ($al->getScheduleForward() as $sf){ ?>
-                    <td><p><?php  print($sf->stop_time); ?></p></td>
-                <?php } ?>
-            </tr>
-        </table>
-
-        <hr class="col-10">
-
-        <table class="col-md-6 h-100 text-center text-lg-left my-auto">
-            <caption style="caption-side: top;" >Direction: <?php print($al->getStop(). " - ". $al->getStart());?></caption>
-            <tr>
+          <table class="col-md-6 h-100 text-center text-lg-left my-auto">
+              <caption style="caption-side: top;" >Direction: <?php print($al->getStart(). " - ". $al->getStop());?></caption>
+              <tr>
                 <th>Departure Time</th>
-                <?php foreach ($al->getScheduleBackward() as $sb){ ?>
-                <td><p><?php print($sb->start_time); ?></p></td>
+                <?php foreach ($al->getScheduleForward() as $sf){ ?>
+                  <td><p><?php print($sf->start_time); ?></p></td>
                 <?php } ?>
-            </tr>
+              </tr>
 
-            <tr>
-                <th>Arrival Time</th>
-                <?php foreach ($al->getScheduleBackward() as $sb){ ?>
-                <td><p><?php  print($sb->stop_time); ?></p></td>
+              <tr>
+              <th>Arrival Time</th>
+                <?php foreach ($al->getScheduleForward() as $sf){ ?>
+                  <td><p><?php  print($sf->stop_time); ?></p></td>
                 <?php } ?>
-            </tr>
-        </table>
+              </tr>
+          </table>
 
+          <hr class="col-10">
+
+          <table class="col-md-6 h-100 text-center text-lg-left my-auto">
+              <caption style="caption-side: top;" >Direction: <?php print($al->getStop(). " - ". $al->getStart());?></caption>
+              <tr>
+                  <th>Departure Time</th>
+                  <?php foreach ($al->getScheduleBackward() as $sb){ ?>
+                    <td><p><?php print($sb->start_time); ?></p></td>
+                  <?php } ?>
+              </tr>
+
+              <tr>
+                  <th>Arrival Time</th>
+                  <?php foreach ($al->getScheduleBackward() as $sb){ ?>
+                    <td><p><?php  print($sb->stop_time); ?></p></td>
+                  <?php } ?>
+              </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-  <?php } ?>
+<?php } ?>
 
   <?php if(isset($admin) && ($admin == true)){ ?>
-  <div class="float-right my-3 mr-4" data-aos="fade-right" data-aos-duration="500" data-aos-delay="600" data-aos-anchor-placement="#accordion">
-    <a href="#"><button class="btn btn-outline-success">Add new</button></a>
-  </div>
+    <div class="float-right my-3 mr-4" data-aos="fade-right" data-aos-duration="500" data-aos-delay="400" data-aos-anchor-placement="#accordion">
+      <a href="index.php?controller=NewAutobusLine&method=index"><button class="btn btn-outline-success">Add new</button></a>
+    </div>
   <?php } ?>

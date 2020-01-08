@@ -1,5 +1,5 @@
 <?php
-    class Stop{
+    class Stop extends Controller{
         private $_id;
         private $_name;
         private $_zone;
@@ -38,6 +38,24 @@
             $this->_zone = $zone;
         }
         //----------------------------
+        //CUSTOM
+
+        public static function getAllStops(){
+            $query = self::$database_instance->getConnection()->prepare("SELECT id, name, zone 
+                                                                        FROM stops 
+                                                                        ORDER BY name ASC");
+            $query->execute();
+            
+            return $query->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        public static function getStopInfoFromStopId($stopId){
+            $query = self::$database_instance->getConnection()->prepare("SELECT name, zone
+                                                                        FROM stops
+                                                                        WHERE id = ?");
+            $query->execute([$stopId]);
+            return $query->fetch(PDO::FETCH_OBJ);
+        }
     }
 
 ?>

@@ -40,21 +40,24 @@
         <?php print($autobusLine->getStart(). " - ". $autobusLine->getStop());?>
     </div>
     <div class="card-body">
-        <?php if(isset($autobusLine->startTime)) {?>
-            <?php if($autobusLine->direction == 1){ ?>
-                <h5 class="card-title">Direction: <?php print($autobusLine->getStart(). " - ". $autobusLine->getStop());?></h5>
-            <?php } else { ?>
-                <h5 class="card-title">Direction: <?php print($autobusLine->getStop(). " - ". $autobusLine->getStart());?></h5>
-            <?php } ?>
+      <?php if(isset($autobusLine->startTime)) {?>
+        <?php if($autobusLine->direction == 1){ ?>
+          <h5 class="card-title">Direction: <?php print($autobusLine->getStart(). " - ". $autobusLine->getStop());?></h5>
+        <?php } else { ?>
+          <h5 class="card-title">Direction: <?php print($autobusLine->getStop(). " - ". $autobusLine->getStart());?></h5>
+        <?php } ?>
+        
         <p class="card-text">List of all autobus drives:</p>
         <?php foreach ($autobusLine->getScheduleForward() as $sf){ ?>
-          <p class="btn <?php SingleLineSchedule::displayCorrectBtn($sf->start_time, $sf->stop_time); ?> disabled"><?php print($sf->start_time). " - ". ($sf->stop_time);?></p>
+          <p class="btn <?php Helpers::displayCorrectBtn($sf->start_time, $sf->stop_time); ?> disabled"><?php print($sf->start_time). " - ". ($sf->stop_time);?></p>
         <?php } ?>
           <br>
         <?php foreach ($autobusLine->getScheduleBackward() as $sb){ ?>
-          <p class="btn <?php SingleLineSchedule::displayCorrectBtn($sb->start_time, $sb->stop_time); ?> disabled"><?php print($sb->start_time). " - ". ($sb->stop_time);?></p>
+          <p class="btn <?php Helpers::displayCorrectBtn($sb->start_time, $sb->stop_time); ?> disabled"><?php print($sb->start_time). " - ". ($sb->stop_time);?></p>
         <?php } ?>
+
         <br><br>
+
         <h5 class="card-title">Stops:</h5>
         <?php if($autobusLine->direction == 1){ 
           foreach ($autobusLine->GetAllLineStops() as $stop){?>
@@ -65,38 +68,47 @@
             <p class="btn btn-primary disabled"><?php print($stop->name);?></p>
           <?php } ?>
         <?php } ?>
-    </div>
-    <div class="card-footer bg-white text-muted">
-        <p class="text-muted float-left"><?php print($autobusLine->startTime); ?></p><p class="text-muted float-right"><?php print($autobusLine->stopTime); ?></p><br>
-        <div class="progress">
+      
+
+        <div class="card-footer bg-white text-muted">
+          <p class="text-muted float-left"><?php print($autobusLine->startTime); ?></p><p class="text-muted float-right"><?php print($autobusLine->stopTime); ?></p><br>
+          <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax=""></div>
-            <script type="text/javascript">var stopTime='<?php print(SingleLineSchedule::getDateNow($autobusLine->stopTime));?>';</script>
-            <script type="text/javascript">var startTime='<?php print(SingleLineSchedule::getDateNow($autobusLine->startTime));?>';</script>
-            <script src="asts/javaScript/progressBar.js"></script>
-        </div>
-        <?php } elseif(($autobusLine->nextDrive) != false) { ?>
-              
-            <p class="card-text">List of all autobus drives:</p>
-            <?php foreach ($autobusLine->getScheduleForward() as $sf){ ?>
-              <p class="btn <?php SingleLineSchedule::displayCorrectBtnForTheNextDrive($sf->start_time, $_GET["autobusLine"]); ?> disabled"><?php print($sf->start_time). " - ". ($sf->stop_time);?></p>
-            <?php } ?>
-              <br>
-            <?php foreach ($autobusLine->getScheduleBackward() as $sb){ ?>
-              <p class="btn <?php SingleLineSchedule::displayCorrectBtnForTheNextDrive($sb->start_time, $_GET["autobusLine"]); ?> disabled"><?php print($sb->start_time). " - ". ($sb->stop_time);?></p>
-            <?php } ?>
-            <br><br>
-            
-            <div class="card-footer bg-white text-muted">
-              <p class="countdown text-muted"></p>
+              <script type="text/javascript">var stopTime='<?php print(Helpers::getDateNow($autobusLine->stopTime));?>';</script>
+              <script type="text/javascript">var startTime='<?php print(Helpers::getDateNow($autobusLine->startTime));?>';</script>
+              <script src="asts/javaScript/progressBar.js"></script>
             </div>
-            <script type="text/javascript">var countdown='<?php print($autobusLine->nextDrive);?>';</script>
-            <script src="asts/javaScript/countdownTimer.js"></script>
-        <?php } else {?>
-            <h6 class="text-muted"><p class="countdown">Done for today.</p></h6>
+          </div>
+      
+      <?php } elseif(($autobusLine->nextDrive) != false) { ?>
+              
+        <p class="card-text">List of all autobus drives:</p>
+        <?php foreach ($autobusLine->getScheduleForward() as $sf){ ?>
+          <p class="btn <?php Helpers::displayCorrectBtnForTheNextDrive($sf->start_time, $_GET["autobusLine"]); ?> disabled"><?php print($sf->start_time). " - ". ($sf->stop_time);?></p>
         <?php } ?>
+          <br>
+        <?php foreach ($autobusLine->getScheduleBackward() as $sb){ ?>
+          <p class="btn <?php Helpers::displayCorrectBtnForTheNextDrive($sb->start_time, $_GET["autobusLine"]); ?> disabled"><?php print($sb->start_time). " - ". ($sb->stop_time);?></p>
+        <?php } ?>
+        <br><br>
+            
+        <div class="card-footer bg-white text-muted">
+          <p class="countdown text-muted"></p>
+        </div>
+        <script type="text/javascript">var countdown='<?php print($autobusLine->nextDrive);?>';</script>
+        <script src="asts/javaScript/countdownTimer.js"></script>
+
+      <?php } else {?>
+        <h6 class="text-muted"><p class="countdown">Done for today.</p></h6>
+      <?php } ?>
     </div>
+  </div>
+
+  <div class="float-right my-3" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="400">
+    <a href="index.php?controller=Schedule&method=index"><button class="btn btn-outline-danger">Go back</button></a>
+  </div>
+  
 </div>
-<div class="float-right my-3" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="400">
-  <a href="index.php?controller=Schedule&method=index"><button class="btn btn-outline-danger">Go back</button></a>
-</div>
+
+
 

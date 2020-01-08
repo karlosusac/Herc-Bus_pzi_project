@@ -30,10 +30,10 @@
                         <div class="card-header">Register an account</div>
                         <div class="card-body">
                             <?php if (isset($error)) { ?>
-                            <div class="alert alert-danger">
-                                <b>Error:</b>
-                                <p><?php echo $error; ?></p>
-                            </div>
+                                <div class="alert alert-danger">
+                                    <b>Error:</b>
+                                    <p><?php echo $error; ?></p>
+                                </div>
                             <?php } ?>
                             <form action="index.php?controller=register&metoda=index" onsubmit="return validateForm(isPassOk)" method="POST">
                                 <div class="form-group row">
@@ -80,6 +80,7 @@
                                     <div class="col-md-6">
                                         <input type="password" id="conPassword" class="form-control" name="conPassword" required onkeyup="isPassOk()">
                                         <div class="invalid-feedback">Passwords do not match</div>
+                                        <small class="text-muted">Whitespaces will not count in the password.</small><br>
                                     </div>
                                 </div>
                                 

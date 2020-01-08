@@ -31,10 +31,10 @@
                         <div class="card-header">Log in</div>
                         <div class="card-body">
                             <?php if (isset($error)){ ?>
-                            <div class="alert alert-danger">
-                                <strong>Error:</strong>
-                                <p><?php print($error); ?></p>
-                            </div>
+                                <div class="alert alert-danger">
+                                    <strong>Error:</strong>
+                                    <p><?php print($error); ?></p>
+                                </div>
                             <?php } ?>
                             <form action="index.php?controller=Login&method=index" method="POST">
                                 <div class="form-group row">

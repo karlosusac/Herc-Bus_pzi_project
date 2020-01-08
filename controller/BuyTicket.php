@@ -10,12 +10,12 @@
                 Login::check_login();
                 
                 if(isset($_GET["schedule"]) && isset($_GET["destination"]) && isset($_GET["departure"]) && isset($_GET["autobusLine"])){
-                    if(self::validateSchedule($_GET["destination"], $_GET["departure"], $_GET["schedule"]) == false){
+                    if(SingleSchedule::validateSchedule($_GET["destination"], $_GET["departure"], $_GET["schedule"]) == false){
                         header("Location: index.php?controller=BuyTicket&method=index&error=Invalid inputs!");
                         die();
 
                     } else {                             
-                        $temp = Schedule::getAllFromSchedule($_GET["schedule"]);
+                        $temp = SingleSchedule::getAllFromSchedule($_GET["schedule"]);
                         $schedule = new SingleSchedule($temp->start_time, $temp->stop_time, $temp->number_of_seats, $temp->direction, $temp->autobus_line_id);
                         unset($temp);
                         $schedule->setId($_GET["schedule"]);
@@ -58,14 +58,14 @@
 
                 } elseif(isset($_GET["departure"]) && isset($_GET["destination"]) && isset($_GET["autobusLine"])){
                     
-                    if(self::validateAutobusLine($_GET["autobusLine"], $_GET["destination"], $_GET["departure"], self::compareStops($_GET["destination"], $_GET["departure"])) == false){
+                    if(self::validateAutobusLine($_GET["autobusLine"], $_GET["destination"], $_GET["departure"], StopsLine::compareStops($_GET["destination"], $_GET["departure"])) == false){
                         
                         header("Location: index.php?controller=BuyTicket&method=index&error=Invalid autobusline or directions!");
                         die();
 
                     } else {
 
-                    $schedule = Schedule::getAllSchedulesForASingleAutobusLine($_GET["autobusLine"], self::compareStops($_GET["destination"], $_GET["departure"]));
+                    $schedule = SingleSchedule::getAllSchedulesForASingleAutobusLine($_GET["autobusLine"], StopsLine::compareStops($_GET["destination"], $_GET["departure"]));
 
                     $this->load("headerAndFooterMain/header", "view");
                     $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "schedule" => $schedule));
@@ -75,8 +75,8 @@
                      }
 
                 } elseif(isset($_GET["destination"]) && isset($_GET["autobusLine"])){
-                    if(self::validateStop($_GET["destination"])){
-                        $stops = self::getRestOfStops($_GET["autobusLine"], $_GET["destination"]);
+                    if(StopsLine::validateStop($_GET["destination"])){
+                        $stops = StopsLine::getRestOfStops($_GET["autobusLine"], $_GET["destination"]);
 
                         $this->load("headerAndFooterMain/header", "view");
                         $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stops));
@@ -85,7 +85,7 @@
                     }
                     
                 } elseif(isset($_GET["autobusLine"])){
-                    $stops = Schedule::getAllStopsForASingleAutobusLine($_GET["autobusLine"]);
+                    $stops = StopsLine::getAllStopsForASingleAutobusLine($_GET["autobusLine"]);
 
                     $this->load("headerAndFooterMain/header", "view");
                     $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stops));
@@ -94,87 +94,10 @@
 
                 } else {
                     $this->load("headerAndFooterMain/header", "view");
-                    $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => self::getAllLines()));
+                    $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => AutobusLine::getAllLines()));
                     $this->load("headerAndFooterMain/footer", "view");
                     die();
                 }
-            }
-        }
-
-        //Vraća sve linije, njihove vožnje i stanice
-        public static function getAllLines(){
-            $query = self::$database_instance->getConnection()->prepare("SELECT *
-                                                                        FROM autobus_line");
-            $query->execute();
-            
-            $autobusLines = $query->fetchAll(PDO::FETCH_OBJ);
-
-            foreach ($autobusLines as $autobusLine){
-                $autobusLine->stops = Schedule::getAllStopsForASingleAutobusLine($autobusLine->ID);
-                $autobusLine->scheduleForward = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->ID, 1);
-                $autobusLine->scheduleBackwards = Schedule::getAllSchedulesForASingleAutobusLine($autobusLine->ID, 0);
-            }
-
-            return $autobusLines;
-            
-        }
-
-        //Vraća niz stanica koje nisu odabrane, koristi se za odabir mjesta polaska (departure) kod kupnje ticket-a
-        public static function getRestOfStops($autobusLine, $stopId){
-            $query = self::$database_instance->getConnection()->prepare("SELECT s.name, s.zone, sl.position_order, sl.id
-                                                                        FROM stops AS s
-                                                                        INNER JOIN stops_line AS sl ON s.id = sl.stops_id
-                                                                        WHERE sl.autobus_line_id = ? AND sl.id <> ?
-                                                                        ORDER BY sl.position_order ASC");
-            $query->execute([$autobusLine, $stopId]);
-            
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
-
-        //Vraća smjer vožnje ovisno o unesenim stanicama
-        public static function compareStops($stop1Id, $stop2Id){
-            $stop1 = self::getStopInfo($stop1Id);
-            $stop2 = self::getStopInfo($stop2Id);
-
-            if($stop1->position_order > $stop2->position_order){
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-
-        //Vraća podatke pojedine stanice
-        public static function getStopInfo($stopsLineId){
-            $query = self::$database_instance->getConnection()->prepare("SELECT s.name, s.zone, sl.position_order
-                                                                        FROM stops AS s
-                                                                        INNER JOIN stops_line AS sl ON s.id = sl.stops_id
-                                                                        WHERE sl.id = ?");
-            $query->execute([$stopsLineId]);
-            return $query->fetch(PDO::FETCH_OBJ);
-        }
-
-        //Validificira da unesena vožnja postoji za unesene stanice
-        public static function validateSchedule($dir1, $dir2, $scheduleId){
-            $direction = self::compareStops($dir1, $dir2);
-
-            $query = self::$database_instance->getConnection()->prepare("SELECT start_time
-                                                                        FROM schedule
-                                                                        WHERE id = ?");
-            $query->execute([$scheduleId]);
-            $schedule = $query->fetch();
-
-            $query = self::$database_instance->getConnection()->prepare("SELECT sc.start_time
-                                                                        FROM schedule AS sc
-                                                                        INNER JOIN autobus_line AS al ON al.id = sc.autobus_line_id
-                                                                        INNER JOIN stops_line AS sl ON al.ID = sl.autobus_line_id 
-                                                                        WHERE (sc.direction LIKE ?) AND (sl.id LIKE ?)");
-            $query->execute([$direction, $dir1]);
-            $scheduleTimes = $query->fetchAll();
-
-            if(in_array($schedule, $scheduleTimes)){
-                return true;
-            } else {
-                return false;
             }
         }
 
@@ -218,20 +141,6 @@
 
         }
 
-        //Potvrđuje da stanica postoji, (jer se vrijednost može mjenjati iz url-a)
-        public static function validateStop($stopId){
-            $query = self::$database_instance->getConnection()->prepare("SELECT id
-                                                                        FROM stops_line
-                                                                        WHERE id = ?");
-            $query->execute([$stopId]);
-
-            if(!empty($query->fetch(PDO::FETCH_OBJ))){
-                return true;
-            } else {
-                return false;
-            }
-        }
-
         //Query za spremanje ticket-a
         public static function makeTicket($accountId, $scheduleid, $departure, $destination, $autobusLineId, $date){
 
@@ -243,8 +152,8 @@
 
         //Računa cijenu iz zona za prosljeđene stanice
         public static function calculatePrice($destinationId, $departureId){
-            $destination = self::getStopInfo($destinationId);
-            $departure = self::getStopInfo($departureId);
+            $destination = StopsLine::getStopInfo($destinationId);
+            $departure = StopsLine::getStopInfo($departureId);
 
             $destinationZone = $destination->zone;
             $departureZone = $departure->zone;
