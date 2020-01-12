@@ -91,6 +91,14 @@
             return $autobusLines;
         }
 
+        public static function getAutobusLineWithId($autobusLineId){
+            $query = self::$database_instance->getConnection()->prepare("SELECT *
+                                                                        FROM autobus_line
+                                                                        WHERE id = ?");
+            $query->execute([$autobusLineId]);
+            return $query->fetch(PDO::FETCH_OBJ);
+        }
+
         //Vraća sve podatke o autobusnoj lini čiji id proslijedimo
         public static function getCurrentlyActiveDrive($autobusLineId){
             $query = self::$database_instance->getConnection()->prepare("SELECT *
@@ -134,6 +142,14 @@
             }
 
             return $autobusLine;
+        }
+
+        //Ubacuje novi autobus line sa podacima koji su dani u "NewAutobusLineSchedule"
+        public static function insertNewAutobusLine($autobusLine){
+            $query = self::$database_instance->getConnection()->prepare("INSERT INTO autobus_line (id, start, stop) VALUES (NULL, ?, ?)");
+            $query->execute([$autobusLine->getStart(), $autobusLine->getStop()]);
+
+            return $autobusLineId = self::getLastInsertedId();
         }
     }
 

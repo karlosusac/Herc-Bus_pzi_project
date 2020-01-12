@@ -62,10 +62,22 @@
 
         //Dohvati sve stanice od autobusne linije čiji id proslijedimo
         public static function getAllStopsForASingleAutobusLine($autobusLineId){
-            $query = self::$database_instance->getConnection()->prepare("SELECT s.name, sl.id
+            $query = self::$database_instance->getConnection()->prepare("SELECT s.name, sl.id, position_order, s.id AS sid
                                                                         FROM stops AS s
                                                                         INNER JOIN stops_line AS sl ON s.id = sl.stops_id
                                                                         WHERE sl.autobus_line_id = ?");
+            $query->execute([$autobusLineId]);
+            $stops = $query->fetchAll(PDO::FETCH_OBJ);
+
+            return ($stops);
+        }
+
+        public static function getAllStopsForASingleAutobusLineOrderedByPositionOrder($autobusLineId){
+            $query = self::$database_instance->getConnection()->prepare("SELECT s.name, sl.id, position_order, s.id AS stop_id
+                                                                        FROM stops AS s
+                                                                        INNER JOIN stops_line AS sl ON s.id = sl.stops_id
+                                                                        WHERE sl.autobus_line_id = ?
+                                                                        ORDER BY position_order");
             $query->execute([$autobusLineId]);
             $stops = $query->fetchAll(PDO::FETCH_OBJ);
 
@@ -118,6 +130,22 @@
             } else {
                 return false;
             }
+        }
+
+        public static function insertNewAutobusLineStops($autobusLine){
+            $position_order = 0;
+            
+            foreach ($autobusLine->getAllLineStops() as $als){
+                $query = self::$database_instance->getConnection()->prepare("INSERT INTO stops_line (id, position_order, stops_id, autobus_line_id) VALUES (NULL, ?, ?, ?)");
+                $query->execute([$position_order, $als[0], $autobusLine->getId()]);
+                
+                $position_order++;
+
+            }
+        }
+
+        public static function test(){
+
         }
     }
 

@@ -16,7 +16,14 @@ class Controller {
         } else {
             include("model/$name.php");
         }
+    }
 
+    public static function getLastInsertedId(){
+        return self::$database_instance->getConnection()->lastInsertId();
+    }
+
+    public static function printRandomCrap(){
+        print("Whoptie dooooo");
     }
 }
 Controller::init();

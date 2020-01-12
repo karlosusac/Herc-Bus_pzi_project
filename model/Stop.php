@@ -50,7 +50,7 @@
         }
 
         public static function getStopInfoFromStopId($stopId){
-            $query = self::$database_instance->getConnection()->prepare("SELECT name, zone
+            $query = self::$database_instance->getConnection()->prepare("SELECT id, name, zone
                                                                         FROM stops
                                                                         WHERE id = ?");
             $query->execute([$stopId]);

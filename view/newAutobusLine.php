@@ -34,8 +34,6 @@
   </div>
 </nav>
 
-<?php  ?>
-
 
 
 <div class="container mt-4" data-aos="fade-in">
@@ -43,6 +41,13 @@
         <div class="card-header bg-dark text-white text-center">
             Create a new Autobus Line
         </div>
+
+        <?php if(isset($_GET["error"])) { ?>
+          <div class="alert alert-danger text-center">
+            <strong>Error:</strong>
+            <p><?php print($_GET["error"]); ?></p>
+          </div>
+        <?php } ?>
         
         <form method="POST" method="index.php?controller=NewSingleLineSchedule&method=index">
           <div class="card-body">

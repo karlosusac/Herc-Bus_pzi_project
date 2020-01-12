@@ -36,7 +36,7 @@
 
 <h3 class="text-center mt-4 mb-4" data-aos="fade-down">Daily Schedule</h3>
 <?php if(isset($_SESSION["id"])){ ?>
-  <small class="text-muted d-flex justify-content-center mb-2" data-aos="fade-in" data-aos-delay="900">You can press on a stop in an autobus line to buy a ticket to there</small>
+  <small class="text-muted d-flex justify-content-center mb-2 text-center" data-aos="fade-in" data-aos-delay="900">You can press on a stop in an autobus line drop menu to buy a ticket to there</small>
 <?php } ?>
 <?php foreach ($autobusLine as $al){ ?>
   <div class="container">
@@ -48,7 +48,7 @@
               <?php print($al->getStart(). " - ". $al->getStop());?>
             </button>
             <?php if(isset($admin) && ($admin == true)){ ?>
-              <a href="index.php?controller=SingleLineSchedule&method=index&autobusLineId=<?php print($al->getId()); ?>" class="btn btn-primary float-right">Edit</a>
+              <a href="index.php?controller=EditAutobusLine&method=index&autobusLineId=<?php print($al->getId()); ?>" class="btn btn-primary float-right">Edit</a>
               <a href="index.php?controller=SingleLineSchedule&method=index&autobusLine=<?php print($al->getId()); ?>" class="btn btn-primary mr-2 float-right">View</a>
             <?php } else { ?>
               <a href="index.php?controller=SingleLineSchedule&method=index&autobusLine=<?php print($al->getId()); ?>" class="btn btn-primary float-right">View</a>

@@ -45,6 +45,7 @@
         </div>
         
         <form method="POST" method="index.php?controller=NewSingleLineSchedule&method=index">
+          <input type="hidden" name="autobusLine" value='<?php print($array) ?>'>
           <div class="card-body">
             <h5 class="card-title text-center">Schedules:</h5>
             <small class="d-flex justify-content-center">Enter the schedules</small><br>

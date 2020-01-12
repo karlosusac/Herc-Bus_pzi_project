@@ -136,6 +136,13 @@
             }
         }
 
+        public static function insertNewAutobusSchedule($autobusLine){
+            foreach ($autobusLine->getScheduleForward() as $schf){
+                $query = self::$database_instance->getConnection()->prepare("INSERT INTO schedule (id, start_time, stop_time, number_of_seats, direction, autobus_line_id) VALUES (NULL, ?, ?, ?, ?, ?)");
+                $query->execute([$schf["startTime"], $schf["stopTime"], $schf["numberOfSeats"], $schf["direction"], $autobusLine->getId()]);
+            }
+        }
+
     }   
 
 
