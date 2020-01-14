@@ -35,13 +35,16 @@
 </nav>
 
 <script>
-     var stopsSelectField = [];
-     var counter = 0;
+        var stopsSelectField = [],
+        counter = 0,
+        stopsCoutner = 0,
+        BolaHajdeVise = []
 </script>
 
 <?php foreach ($stops as $stop) { ?>
     <script>
         stopsSelectField['<?php print($stop->getName()) ?>'] = counter;
+        BolaHajdeVise[counter] = {name:"<?php print($stop->getName()) ?>", id:"<?php print($stop->getId()) ?>" }
         counter++;
     </script>
 <?php } ?>
@@ -70,7 +73,8 @@
 
                 <hr class="col-10 my-4">
 
-                <div class="text-center col-12" style="text-align: center;">
+              
+                <div class="text-center col-12" id="stopContainer" style="text-align: center;">
                     <h5 class="card-title">Stops:</h5><br>
                     <?php foreach($autobusLine->getAllLineStops() as $als){ ?>
                         <script>
@@ -78,9 +82,9 @@
                         </script>
 
                         <div class="mt-2">
-                            <h5 class="text-center">Stop <?php print(intval($als->position_order) + 1) ?></h5><br>
+                            <h5 class="text-center">Stop <?php print($stopsCounter + 1) ?></h5><br>
                             <label>Name:</label>
-                            <select id="stopsSelect<?php print($als->position_order) ?>" name="editAutobusLineStops[0]" class="form-control text-center d-flex justify-content-center" required> 
+                            <select id="stopsSelect<?php print($stopsCounter) ?>" name="editAutobusLineStops[<?php print($stopsCounter) ?>]" class="form-control text-center d-flex justify-content-center" required> 
                                 <?php foreach($stops as $stop){ ?>
                                     <option value="<?php print($stop->getId()); ?>" ><?php print($stop->getName()); ?></option>   
                                     <script>
@@ -88,18 +92,20 @@
                                         if(stopName == Blabla){
                                             var index = stopsSelectField[stopName];
                                             console.log(index + " value is " + stopName);
-                                            document.getElementById("stopsSelect<?php print($als->position_order) ?>").selectedIndex = index;
+                                            document.getElementById("stopsSelect<?php print($stopsCounter) ?>").selectedIndex = index;
                                         }
                                     </script>
                                 <?php } ?>
                             </select>
                         </div>
-                    <?php } ?>
+                        <?php $stopsCounter++; ?>
+                    <?php }  ?>
+                </div>
+                
+                <div class="btn btn-outline-success my-2 d-flex justify-content-center" id="addNewStop" class="addNewStop" onclick='scrollToTheBottom()'>
+                    <a>Add a new stop</a>
                 </div>
 
-                <hr class="col-10 my-4">
-
-                
             </div>
 
             <div class="card-footer bg-dark">
@@ -110,3 +116,38 @@
         </form>
     </div>
 </div>
+
+<script>
+//Js za button mora biti ovdije radi php-a
+let i = <?php print(intval($stopsCounter) + 1) ?>;
+
+document.getElementById('addNewStop').onclick = function () {
+    let template = `
+        <div class="mt-2">
+          <h5 class="text-center">Stop` + i + `</h5><br>
+          <label>Name:</label>
+          <select id="stopsSelect` + i + `" name="editAutobusLineStops[` + i + `]" class="form-control text-center d-flex justify-content-center" required> 
+            <?php foreach($stops as $stop){ ?>
+              <option value="<?php print($stop->getId()); ?>" ><?php print($stop->getName()); ?></option> 
+            <?php } ?>
+          </select>
+        </div>
+        `
+
+    let container = document.getElementById('stopContainer');
+    let div = document.createElement('div');
+    div.innerHTML = template;
+    container.appendChild(div);
+
+    i++;
+}
+
+document.getElementById('delteLastElement').onclick = function () {
+    if(i > 1){
+        let container = document.getElementById('stopContainer');
+        container.removeChild(container.lastChild);
+    
+        i--;
+    }
+}
+</script>

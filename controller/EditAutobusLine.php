@@ -30,10 +30,12 @@
                             array_push($stopsArray, $temp2);
                         }
                         unset($temp);
-                        unset($temp2);   
+                        unset($temp2);
+
+                        $stopsCounter = 0;
 
                         $this->load("headerAndFooterMain/header", "view");
-                        $this->load("editAutobusLine", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $this->_autobusLine, "stops" => $stopsArray));
+                        $this->load("editAutobusLine", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $this->_autobusLine, "stops" => $stopsArray, "stopsCounter" => $stopsCounter));
                         $this->load("headerAndFooterMain/footer", "view");
                         die();
                     }
