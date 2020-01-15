@@ -12,7 +12,7 @@
                         $this->_autobusLine->setId($_GET["autobusLineId"]);
 
                         $this->_autobusLine->setAllLineStops(StopsLine::getAllStopsForASingleAutobusLineOrderedByPositionOrder($this->_autobusLine->getId()));
-
+                        
                         $this->_autobusLine->setScheduleForward(SingleSchedule::getAllSchedulesForASingleAutobusLine($this->_autobusLine->getId(), 1));
                         $this->_autobusLine->setScheduleBackward(SingleSchedule::getAllSchedulesForASingleAutobusLine($this->_autobusLine->getId(), 0));
                         
@@ -32,10 +32,8 @@
                         unset($temp);
                         unset($temp2);
 
-                        $stopsCounter = 0;
-
                         $this->load("headerAndFooterMain/header", "view");
-                        $this->load("editAutobusLine", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $this->_autobusLine, "stops" => $stopsArray, "stopsCounter" => $stopsCounter));
+                        $this->load("editAutobusLine", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $this->_autobusLine, "stops" => $stopsArray));
                         $this->load("headerAndFooterMain/footer", "view");
                         die();
                     }

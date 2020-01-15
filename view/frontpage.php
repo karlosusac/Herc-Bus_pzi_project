@@ -36,31 +36,19 @@
   </div>
 </nav>
 
-<!-- Masthead -->
 <header class="masthead text-white text-center shadow" style="background-image: url('asts/imgs/interior-2.jpg');" data-aos="fade-in">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5" style="color: white;">Build a landing page for your business or project and generate more leads!</h1>
-        </div>
-        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
-            <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
-              </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
-              </div>
-            </div>
-          </form>
+          <h1 class="mb-5" style="color: white;" data-aos="fade-down" data-aos-delay="400">Herc-Bus transport</h1>
+          
+          <a href="index.php?controller=BuyTicket&method?index" data-aos="fade-in" data-aos-delay="700" class="btn btn-outline-light">Buy a ticket</a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Icons Grid -->
   <section class="features-icons text-center">
     <div class="container">
       <div class="row">
@@ -95,7 +83,6 @@
     </div>
   </section>
 
-  <!-- Image Showcases -->
   <section class="showcase">
     <div class="container-fluid p-0">
       <div class="row no-gutters">
@@ -127,8 +114,6 @@
 
   <iframe class="mt-3 shadow-sm" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46428.66645766114!2d17.78622105001283!3d43.33954865797219!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134b43a43b6340a9%3A0x14f32b2d4e37c5a!2sMostar%2088000!5e0!3m2!1sen!2sba!4v1578316364354!5m2!1sen!2sba" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" data-aos="fade-up"></iframe>
 
-
-  <!-- Footer -->
   <footer class="footer" data-aos="fade-in">
     <div class="container">
       <div class="row">
