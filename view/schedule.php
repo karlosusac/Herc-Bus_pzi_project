@@ -38,6 +38,18 @@
 <?php if(isset($_SESSION["id"])){ ?>
   <small class="text-muted d-flex justify-content-center mb-2 text-center" data-aos="fade-in" data-aos-delay="900">You can press on a stop in an autobus line drop menu to buy a ticket to there</small>
 <?php } ?>
+
+<?php if(isset($_GET["error"])){ ?>
+  <div class="alert alert-danger text-center" data-aos="fade-up" data-aos-delay="600">
+    <strong>Error:</strong>
+    <p><?php print($_GET["error"]); ?></p>
+  </div>
+<?php } else if(isset($_GET["success"])){ ?>
+  <div class="alert alert-success text-center" data-aos="fade-up" data-aos-delay="600">
+    <strong>Success:</strong>
+    <p><?php print($_GET["success"]); ?></p>
+  </div>
+<?php } ?>
 <?php foreach ($autobusLine as $al){ ?>
   <div class="container">
     <div class="accordion shadow" id="accordion" data-aos="fade-up">

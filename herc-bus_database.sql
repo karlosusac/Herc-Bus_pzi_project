@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2020 at 09:41 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- Generation Time: Jan 16, 2020 at 09:39 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -65,9 +65,8 @@ CREATE TABLE `autobus_line` (
 --
 
 INSERT INTO `autobus_line` (`ID`, `start`, `stop`) VALUES
-(1, 'Vrh Avenije', 'Žitomislići'),
-(2, 'Vrh Avenije', 'Hodbina'),
-(3, 'Vrh Avenije', 'Bačevići');
+(27, 'Vrh Avenije', 'Hodbina'),
+(28, 'Vrh Avenije', 'Žitomislići');
 
 -- --------------------------------------------------------
 
@@ -89,26 +88,14 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`ID`, `start_time`, `stop_time`, `number_of_seats`, `direction`, `autobus_line_id`) VALUES
-(1, '06:30:00', '06:50:00', 45, 1, 3),
-(2, '06:50:00', '07:10:00', 45, 0, 3),
-(3, '13:30:00', '13:50:00', 45, 1, 3),
-(4, '13:50:00', '14:10:00', 45, 0, 3),
-(5, '16:15:00', '16:35:00', 45, 1, 3),
-(6, '16:35:00', '16:55:00', 45, 0, 3),
-(7, '06:10:00', '06:50:00', 45, 1, 2),
-(8, '06:50:00', '07:30:00', 45, 0, 2),
-(9, '09:30:00', '10:00:00', 45, 1, 2),
-(10, '10:00:00', '10:30:00', 45, 0, 2),
-(11, '16:15:00', '16:45:00', 45, 1, 2),
-(12, '16:45:00', '17:15:00', 45, 0, 2),
-(13, '19:30:00', '20:00:00', 45, 1, 2),
-(14, '20:00:00', '20:30:00', 45, 0, 2),
-(15, '11:15:00', '11:50:00', 45, 1, 1),
-(16, '11:50:00', '12:25:00', 45, 0, 1),
-(17, '13:40:00', '14:20:00', 45, 1, 1),
-(18, '14:20:00', '15:00:00', 45, 0, 1),
-(19, '18:00:00', '18:40:00', 45, 1, 1),
-(20, '18:40:00', '23:59:00', 45, 0, 1);
+(77, '06:00:00', '06:30:00', 45, 1, 27),
+(83, '06:40:00', '07:30:00', 45, 0, 28),
+(75, '08:00:00', '08:30:00', 45, 0, 27),
+(76, '10:00:00', '10:30:00', 45, 0, 27),
+(84, '11:50:00', '12:30:00', 45, 0, 28),
+(78, '15:15:00', '16:00:00', 45, 1, 27),
+(82, '15:15:00', '16:00:00', 45, 1, 28),
+(85, '19:15:00', '20:10:00', 45, 1, 28);
 
 -- --------------------------------------------------------
 
@@ -129,7 +116,23 @@ CREATE TABLE `session_id` (
 
 INSERT INTO `session_id` (`id`, `login_date`, `token`, `account_id`) VALUES
 (190, '2020-01-03 21:40:58', 'cfecdb276f634854f3ef915e2e980c312bd2fc3a30b75ea708875bd15ee72fdd', 14),
-(191, '2020-01-03 21:41:32', '0aa1883c6411f7873cb83dacb17b0afc2513ab9e78e8dcb0857bde1ad4612f61', 13);
+(191, '2020-01-03 21:41:32', '0aa1883c6411f7873cb83dacb17b0afc2513ab9e78e8dcb0857bde1ad4612f61', 13),
+(192, '2020-01-12 09:36:02', '58a2fc6ed39fd083f55d4182bf88826dbafebf4d94ccfe0e4913e9e8e2d51e05', 14),
+(193, '2020-01-12 15:26:57', 'bd686fd640be98efaae0091fa301e6132513ab9e78e8dcb0857bde1ad4612f61', 14),
+(194, '2020-01-12 15:28:34', 'a597e50502f5ff68e3e25b9114205d4a81c69420d3496e89430202205ddd99e1', 14),
+(195, '2020-01-12 16:54:22', '0336dcbab05b9d5ad24f4333c7658a0e81c69420d3496e89430202205ddd99e1', 14),
+(196, '2020-01-13 15:22:07', '084b6fbb10729ed4da8c3d3f5a3ae7c9bafebf4d94ccfe0e4913e9e8e2d51e05', 14),
+(197, '2020-01-14 19:57:31', '85d8ce590ad8981ca2c8286f79f599542bd2fc3a30b75ea708875bd15ee72fdd', 14),
+(198, '2020-01-15 07:27:12', '0e65972dce68dad4d52d063967f0a7051c6eb9b727983de061a31a7452cd8656', 14),
+(199, '2020-01-15 07:59:11', '84d9ee44e457ddef7f2c4f25dc8fa8652bd2fc3a30b75ea708875bd15ee72fdd', 14),
+(200, '2020-01-15 08:08:56', '3644a684f98ea8fe223c713b77189a772bd2fc3a30b75ea708875bd15ee72fdd', 14),
+(201, '2020-01-15 13:37:24', '757b505cfd34c64c85ca5b5690ee52932513ab9e78e8dcb0857bde1ad4612f61', 14),
+(202, '2020-01-15 18:11:33', '854d6fae5ee42911677c739ee1734486caa9361d616e085aaea7453943e61476', 14),
+(203, '2020-01-15 21:02:16', 'e2c0be24560d78c5e599c2a9c9d0bbd2bafebf4d94ccfe0e4913e9e8e2d51e05', 14),
+(204, '2020-01-16 09:18:24', '274ad4786c3abca69fa097b85867d9a4bafebf4d94ccfe0e4913e9e8e2d51e05', 14),
+(205, '2020-01-16 11:26:33', 'eae27d77ca20db309e056e3d2dcd7d69bafebf4d94ccfe0e4913e9e8e2d51e05', 14),
+(206, '2020-01-16 19:05:41', '7eabe3a1649ffa2b3ff8c02ebfd5659f2513ab9e78e8dcb0857bde1ad4612f61', 14),
+(207, '2020-01-16 21:35:27', '69adc1e107f7f7d035d7baf04342e1ca81c69420d3496e89430202205ddd99e1', 14);
 
 -- --------------------------------------------------------
 
@@ -179,25 +182,19 @@ CREATE TABLE `stops_line` (
 --
 
 INSERT INTO `stops_line` (`ID`, `position_order`, `stops_id`, `autobus_line_id`) VALUES
-(1, 0, 1, 3),
-(2, 1, 2, 3),
-(3, 2, 3, 3),
-(4, 3, 8, 3),
-(5, 4, 9, 3),
-(6, 5, 10, 3),
-(7, 0, 1, 2),
-(8, 1, 2, 2),
-(9, 2, 3, 2),
-(10, 3, 4, 2),
-(11, 4, 5, 2),
-(12, 5, 7, 2),
-(13, 0, 1, 1),
-(14, 1, 2, 1),
-(15, 2, 3, 1),
-(16, 3, 4, 1),
-(17, 4, 5, 1),
-(18, 5, 7, 1),
-(19, 6, 6, 1);
+(127, 0, 1, 27),
+(128, 1, 2, 27),
+(129, 2, 3, 27),
+(130, 3, 4, 27),
+(131, 4, 5, 27),
+(132, 5, 7, 27),
+(140, 0, 1, 28),
+(141, 1, 2, 28),
+(142, 2, 3, 28),
+(143, 3, 4, 28),
+(144, 4, 5, 28),
+(145, 5, 7, 28),
+(146, 6, 6, 28);
 
 -- --------------------------------------------------------
 
@@ -216,15 +213,6 @@ CREATE TABLE `ticket` (
   `purchased` datetime NOT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `ticket`
---
-
-INSERT INTO `ticket` (`ID`, `account_id`, `schedule_id`, `autobusline_id`, `departure`, `destination`, `valid_date`, `purchased`, `price`) VALUES
-(46, 14, 16, 1, 19, 13, '2020-01-06', '2020-01-03 21:41:07', 0),
-(47, 14, 11, 2, 7, 8, '2020-01-10', '2020-01-03 21:41:17', 0),
-(48, 14, 4, 3, 6, 2, '2020-01-17', '2020-01-03 21:41:26', 0);
 
 --
 -- Indexes for dumped tables
@@ -249,6 +237,7 @@ ALTER TABLE `autobus_line`
 --
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `unique` (`start_time`,`stop_time`,`number_of_seats`,`direction`,`autobus_line_id`) USING BTREE,
   ADD KEY `schedule_autobus_line_id` (`autobus_line_id`);
 
 --
@@ -297,19 +286,19 @@ ALTER TABLE `account`
 -- AUTO_INCREMENT for table `autobus_line`
 --
 ALTER TABLE `autobus_line`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `session_id`
 --
 ALTER TABLE `session_id`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=192;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
 
 --
 -- AUTO_INCREMENT for table `stops`
@@ -321,13 +310,13 @@ ALTER TABLE `stops`
 -- AUTO_INCREMENT for table `stops_line`
 --
 ALTER TABLE `stops_line`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- Constraints for dumped tables

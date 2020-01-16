@@ -108,7 +108,8 @@
           </div>
         <?php } ?>
 
-        <form method="POST" action="index.php?controller=Test&method=index">
+        <form method="POST" action="index.php?controller=EditAutobusLine&method=index">
+        <input type="hidden" name="autobusLineId" value='<?php print($autobusLineId) ?>'>
             <div class="card-body">
                 <div class="text-center col-12" style="text-align: center;">
                     <h5 class="card-title">Autobus Line:</h5><br>
@@ -169,16 +170,16 @@
                           <div class="text-center">
                             <h5 class="text-center">Schedule ` + (scheduleCounter + 1) + `</h5><br>
                             <label>Start Time:</label>
-                            <input type="time" name="listOfSchedules[` + scheduleCounter + `][startTime]" class="scheduleStartTime form-control text-center d-flex justify-content-center" required>
+                            <input type="time" name="editAutobusLineSchedules[` + scheduleCounter + `][startTime]" class="scheduleStartTime form-control text-center d-flex justify-content-center" required>
                                       
                             <label>Stop Time:</label>
-                            <input type="time" name="listOfSchedules[` + scheduleCounter + `][stopTime]" class="scheduleStopTime form-control text-center d-flex justify-content-center" required>
+                            <input type="time" name="editAutobusLineSchedules[` + scheduleCounter + `][stopTime]" class="scheduleStopTime form-control text-center d-flex justify-content-center" required>
                                       
                             <label>Number of seats in a autobus:</label>
-                            <input type="number" min="1" value="45" name="listOfSchedules[` + scheduleCounter + `][numberOfSeats]" class="scheduleNumOfSeats form-control text-center d-flex justify-content-center" required>
+                            <input type="number" min="1" value="45" name="editAutobusLineSchedules[` + scheduleCounter + `][numberOfSeats]" class="scheduleNumOfSeats form-control text-center d-flex justify-content-center" required>
                                       
                             <label>Direction:</label>
-                            <select name="listOfSchedules[` + scheduleCounter + `][direction]" class="scheduleDirection form-control text-center d-flex justify-content-center" required>
+                            <select name="editAutobusLineSchedules[` + scheduleCounter + `][direction]" class="scheduleDirection form-control text-center d-flex justify-content-center" required>
                               <option value="0">From <?php print($autobusLine->getStop())?> to <?php print($autobusLine->getStart())?></option>
                               <option value="1">From <?php print($autobusLine->getStart())?> to <?php print($autobusLine->getStop())?></option>
                             </select>
@@ -206,10 +207,12 @@
 
             </div>
 
-            <div class="card-footer bg-dark">
-                <button type="submit" class="btn btn-outline-light col-12">
+            <div class="card-footer row bg-dark d-flex justify-content-center">
+                <button type="submit" class="btn btn-success col-md-3 mr-2">
                     Edit
                 </button>
+
+                <a class="btn btn-danger col-md-3" href="index.php?controller=EditAutobusLine&method=deleteAutobusLine&autobusLineId=<?php print(json_decode($autobusLineId)->id);?>">Delete an autobus line</a>
             </div>
         </form>
     </div>
@@ -257,16 +260,16 @@ document.getElementById('addNewSchedule').onclick = function () {
         <div class="text-center" data-aos="fade-up" data-aos-duration="600">
           <h5 class="text-center">Schedule ` + (scheduleCounter + 1) + `</h5><br>
           <label>Start Time:</label>
-          <input type="time" name="listOfSchedules[` + scheduleCounter + `][startTime]" class="scheduleStartTime form-control text-center d-flex justify-content-center" required>
+          <input type="time" name="editAutobusLineSchedules[` + scheduleCounter + `][startTime]" class="scheduleStartTime form-control text-center d-flex justify-content-center" required>
                                       
           <label>Stop Time:</label>
-          <input type="time" name="listOfSchedules[` + scheduleCounter + `][stopTime]" class="scheduleStopTime form-control text-center d-flex justify-content-center" required>
+          <input type="time" name="editAutobusLineSchedules[` + scheduleCounter + `][stopTime]" class="scheduleStopTime form-control text-center d-flex justify-content-center" required>
                                       
           <label>Number of seats in a autobus:</label>
-          <input type="number" min="1" value="45" name="listOfSchedules[` + scheduleCounter + `][numberOfSeats]" class="scheduleNumOfSeats form-control text-center d-flex justify-content-center" required>
+          <input type="number" min="1" value="45" name="editAutobusLineSchedules[` + scheduleCounter + `][numberOfSeats]" class="scheduleNumOfSeats form-control text-center d-flex justify-content-center" required>
                                       
           <label>Direction:</label>
-          <select name="listOfSchedules[` + scheduleCounter + `][direction]" class="scheduleDirection form-control text-center d-flex justify-content-center" required>
+          <select name="editAutobusLineSchedules[` + scheduleCounter + `][direction]" class="scheduleDirection form-control text-center d-flex justify-content-center" required>
             <option value="0">From <?php print($autobusLine->getStop())?> to <?php print($autobusLine->getStart())?></option>
             <option value="1" selected>From <?php print($autobusLine->getStart())?> to <?php print($autobusLine->getStop())?></option>
           </select>

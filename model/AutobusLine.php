@@ -151,6 +151,50 @@
 
             return $autobusLineId = self::getLastInsertedId();
         }
+
+        //Edit-a autobusnu liniju sa prosljeđenim podacima
+        public static function editAutobusLine($stopsArray, $scheduleArray, $autobusLineId){
+            $query = self::$database_instance->getConnection()->prepare("DELETE FROM schedule
+                                                        WHERE autobus_line_id = ?");
+            $query->execute([$autobusLineId]);
+
+            foreach($scheduleArray as $sa){
+                $startTime = $sa["startTime"];
+                $stopTime = $sa["stopTime"];
+                $numberOfSeats = $sa["numberOfSeats"];
+                $direction = $sa["direction"];
+
+                $query = self::$database_instance->getConnection()->prepare("INSERT INTO schedule (id, start_time, stop_time, number_of_seats, direction, autobus_line_id) VALUES (NULL, time(?), time(?), ?, ?, ?)");
+                $query->execute([$startTime, $stopTime, intval($numberOfSeats), intval($direction), intval($autobusLineId)]);
+            }
+
+            $query = self::$database_instance->getConnection()->prepare("DELETE FROM stops_line
+                                                        WHERE autobus_line_id = ?");
+            $query->execute([$autobusLineId]);
+
+            $counter = 0;
+            foreach($stopsArray as $stopId){
+                $query = self::$database_instance->getConnection()->prepare("INSERT INTO stops_line (id, position_order, stops_id, autobus_line_id) VALUES (NULL, ?, ?, ?)");
+                $query->execute([$counter, intval($stopId), intval($autobusLineId)]);
+                
+                $counter++;
+            }
+
+            return true;
+        }
+
+        //Provjerava dali postoji autobuska linija u bazi
+        public static function checkIfAutobusLineExists($autobusLineId){
+            $query = self::$database_instance->getConnection()->prepare("SELECT *
+                                                                    FROM autobus_line
+                                                                    WHERE id = ?");
+            $query->execute([$autobusLineId]);
+            if(!empty($query->fetch(PDO::FETCH_OBJ))){
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
 ?>
