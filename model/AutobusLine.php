@@ -118,8 +118,13 @@
                 $autobusLine->setScheduleBackward(SingleSchedule::getAllSchedulesForASingleAutobusLine($autobusLine->getId(), 0));
                 
                 //Pronalazi trenutnu vožnji i sprema te podatke
-                AutobusLine::checkIfDriveIsActive($autobusLine, $autobusLine->getScheduleForward(), 1);
-                AutobusLine::checkIfDriveIsActive($autobusLine, $autobusLine->getScheduleBackward(), 0);
+                //AutobusLine::checkIfDriveIsActive($autobusLine, $autobusLine->getScheduleForward(), 1);
+                //AutobusLine::checkIfDriveIsActive($autobusLine, $autobusLine->getScheduleBackward(), 0);
+
+                //$autobusLine->activeDrives = [];
+
+                $autobusLine->activeDrives = AutobusLine::checkIfDrivesAreActive($autobusLine, $autobusLine->getScheduleForward(), 1);
+                $autobusLine->activeDrives = array_merge($autobusLine->activeDrives, AutobusLine::checkIfDrivesAreActive($autobusLine, $autobusLine->getScheduleBackward(), 0));
                 
                 return $autobusLine;
             } else {
@@ -144,6 +149,23 @@
             return $autobusLine;
         }
 
+        public static function checkIfDrivesAreActive($autobusLine, $schedule, $direction){
+            date_default_timezone_set("Europe/Sarajevo");
+            $timeNow = date( "H:i:s", time());
+
+            $listOfAllActiveDrives = [];
+
+            foreach ($schedule as $s){
+                if($s->start_time < $timeNow && $s->stop_time > $timeNow){
+                    $activeDrive = array("startTime" => $s->start_time, "stopTime" => $s->stop_time, "direction" => $direction);
+
+                    array_push($listOfAllActiveDrives, $activeDrive);
+                }
+            }
+
+            return $listOfAllActiveDrives;
+        }
+
         //Ubacuje novi autobus line sa podacima koji su dani u "NewAutobusLineSchedule"
         public static function insertNewAutobusLine($autobusLine){
             $query = self::$database_instance->getConnection()->prepare("INSERT INTO autobus_line (id, start, stop) VALUES (NULL, ?, ?)");
@@ -153,7 +175,7 @@
         }
 
         //Edit-a autobusnu liniju sa prosljeđenim podacima
-        public static function editAutobusLine($stopsArray, $scheduleArray, $autobusLineId){
+        public static function editAutobusLine($stopsArray, $scheduleArray, $autobusLineId, $autobusLineStart, $autobusLineStop){
             $query = self::$database_instance->getConnection()->prepare("DELETE FROM schedule
                                                         WHERE autobus_line_id = ?");
             $query->execute([$autobusLineId]);
@@ -179,6 +201,10 @@
                 
                 $counter++;
             }
+
+            $query = self::$database_instance->getConnection()->prepare("UPDATE autobus_line SET start = ?,stop = ?
+                                                                        WHERE id = ?");
+            $query->execute([trim($autobusLineStart), trim($autobusLineStop), $autobusLineId]);
 
             return true;
         }

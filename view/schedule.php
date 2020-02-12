@@ -75,7 +75,7 @@
                   <?php foreach ($al->getAllLineStops() as $stop){ ?>
                     <li class="list-inline-item">&sdot;</li>
                     <li class="list-inline-item">
-                      <a href="http://localhost/Herc-Bus_project/index.php?controller=BuyTicket&method=index&autobusLine=<?php print($al->getId()); ?>&destination=<?php print($stop->id); ?>"><?php print($stop->name); ?></a>
+                      <a href="index.php?controller=BuyTicket&method=index&autobusLine=<?php print($al->getId()); ?>&destination=<?php print($stop->id); ?>"><?php print($stop->name); ?></a>
                     </li>
                   <?php } ?>
                 </ul>

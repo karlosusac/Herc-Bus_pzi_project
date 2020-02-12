@@ -4,7 +4,7 @@
         public function index(){
             if(isset($_GET["autobusLine"])){
                 if($autobusLine = AutobusLine::getCurrentlyActiveDrive($_GET["autobusLine"])){ 
-                    if ($autobusLine->nextDrive = SingleSchedule::getNextScheduledDrive($_GET["autobusLine"])){}
+                    if ($autobusLine->nextDrive = SingleSchedule::getNextScheduledDrive($_GET["autobusLine"]));
 
                     if(isset($_SESSION["id"])){
                         Login::check_login();

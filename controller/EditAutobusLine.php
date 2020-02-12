@@ -7,9 +7,10 @@
             if(isset($_SESSION["id"])){
                 Login::check_login();
                 if(Login::$account->getAdmin() == 1){
-                    if(isset($_POST["editAutobusLineSchedules"]) && isset($_POST["editAutobusLineStops"]) && isset($_POST["autobusLineId"])){
+                    if(isset($_POST["editAutobusLineSchedules"]) && isset($_POST["editAutobusLineStops"]) && isset($_POST["autobusLineId"]) && isset($_POST["autobusLineStart"]) && isset($_POST["autobusLineStop"])){
                 
-                        if(AutobusLine::editAutobusLine($_POST["editAutobusLineStops"], $_POST["editAutobusLineSchedules"], json_decode($_POST["autobusLineId"])->id)){
+
+                        if(AutobusLine::editAutobusLine($_POST["editAutobusLineStops"], $_POST["editAutobusLineSchedules"], json_decode($_POST["autobusLineId"])->id, $_POST["autobusLineStart"], $_POST["autobusLineStop"])){
                             header("Location: index.php?controller=Schedule&method=index&success=Successfully updated!");
                         } else {
                             header("Location: index.php?controller=Schedule&method=index&error=Updating failed!");

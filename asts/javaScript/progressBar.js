@@ -1,26 +1,32 @@
-var start = new Date(startTime),
-    end = new Date(stopTime);
+var startTime = [],
+    stopTime = [];
+
+    console.log(document.getElementsByClassName("progress-bar")[1]);
 
 var countdownUpdate = setInterval(function() {
 
-    var startDate = start.getTime();
-    var endDate = end.getTime();
-    var now = new Date().getTime();
+    for(var counter = 0; counter < startTime.length; counter++){
+        var start = new Date(startTime[counter]),
+            end = new Date(stopTime[counter]);
 
-    // Get the total possible timestamp value
-    var total = endDate - startDate;
+        var startDate = start.getTime();
+        var endDate = end.getTime();
+        var now = new Date().getTime();
 
-    // Get the current value
-    var current = now - startDate;
+        // Get the total possible timestamp value
+        var total = endDate - startDate;
 
-    // Get the percentage
-    var progress = ((current / total) * 100) + '%';
+        // Get the current value
+        var current = now - startDate;
 
-    document.getElementsByClassName("progress-bar")[0].style.width = progress;
+        // Get the percentage
+        var progress = ((current / total) * 100) + '%';
 
-    if (progress === "100%") {
-        clearInterval(countdownUpdate);
-        document.getElementsByClassName("countdown")[0].innerHTML = "Autobus has started, refresh the page for an update.";
+        document.getElementsByClassName("progress-bar")[counter].style.width = progress;
+
+        if (progress === "100%") {
+            clearInterval(countdownUpdate);
+            document.getElementsByClassName("countdown")[counter].innerHTML = "Autobus has started, refresh the page for an update.";
+        }
     }
-    
 }, 500);
