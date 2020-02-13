@@ -40,18 +40,18 @@
         <?php print($autobusLine->getStart(). " - ". $autobusLine->getStop());?>
     </div>
     <div class="card-body">
-      <?php if(isset($autobusLine->startTime)) {?>
-        <?php if($autobusLine->direction == 1){ ?>
-          <h5 class="card-title">Direction: <?php print($autobusLine->getStart(). " - ". $autobusLine->getStop());?></h5>
-        <?php } else { ?>
-          <h5 class="card-title">Direction: <?php print($autobusLine->getStop(). " - ". $autobusLine->getStart());?></h5>
-        <?php } ?>
-        
-        <p class="card-text">List of all autobus drives:</p>
+      <?php if(!empty($autobusLine->activeDrives)) {?>
+        <h5 class="card-text">List of all autobus drives:</h5>
+
+        <br>
+
+        <p class="card-title">Direction: <?php print($autobusLine->getStart(). " - ". $autobusLine->getStop());?></p>
         <?php foreach ($autobusLine->getScheduleForward() as $sf){ ?>
           <p class="btn <?php Helpers::displayCorrectBtn($sf->start_time, $sf->stop_time); ?> disabled"><?php print($sf->start_time). " - ". ($sf->stop_time);?></p>
         <?php } ?>
           <br>
+
+        <p class="card-title">Direction: <?php print($autobusLine->getStop(). " - ". $autobusLine->getStart());?></p>
         <?php foreach ($autobusLine->getScheduleBackward() as $sb){ ?>
           <p class="btn <?php Helpers::displayCorrectBtn($sb->start_time, $sb->stop_time); ?> disabled"><?php print($sb->start_time). " - ". ($sb->stop_time);?></p>
         <?php } ?>
@@ -63,41 +63,34 @@
           <p class="btn btn-primary disabled"><?php print($stop->name);?></p>
         <?php } ?>
 
-        <?php if($autobusLine->direction == 1){ ?>
-          <div class="card-footer bg-white text-muted">
-          <p class="text-muted float-left"><?php print($autobusLine->startTime); ?></p><p class="text-muted float-right"><?php print($autobusLine->stopTime); ?></p><br>
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax=""></div>
-              <script type="text/javascript">var stopTime='<?php print(Helpers::getDateNow($autobusLine->stopTime));?>';</script>
-              <script type="text/javascript">var startTime='<?php print(Helpers::getDateNow($autobusLine->startTime));?>';</script>
-              <script src="asts/javaScript/progressBar.js"></script>
-            </div>
-          </div>
+        <?php for($counter = 0; $counter < count($autobusLine->activeDrives); $counter++){ ?>
 
-        <?php } else { ?>
-          <div class="card-footer bg-white text-muted">
-          <p class="text-muted float-left"><?php print($autobusLine->stopTime); ?></p><p class="text-muted float-right"><?php print($autobusLine->startTime); ?></p><br>
-          <div class="progress progress justify-content-end">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax=""></div>
-              <script type="text/javascript">var stopTime='<?php print(Helpers::getDateNow($autobusLine->stopTime));?>';</script>
-              <script type="text/javascript">var startTime='<?php print(Helpers::getDateNow($autobusLine->startTime));?>';</script>
-              <script src="asts/javaScript/progressBar.js"></script>
+          <?php if($autobusLine->activeDrives[$counter]["direction"] == 1){ ?>
+            <div class="card-footer bg-white text-muted">
+            <p class="text-muted float-left"><?php print($autobusLine->activeDrives[$counter]["startTime"]); ?></p><p class="text-muted float-right"><?php print($autobusLine->activeDrives[$counter]["stopTime"]); ?></p><br>
+            <script src="asts/javaScript/progressBar.js"></script>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax=""></div>
+                <!-- <script src="asts/javaScript/progressBar.js"></script> -->
+                <script type="text/javascript">stopTime.push('<?php print(Helpers::getDateNow($autobusLine->activeDrives[$counter]["stopTime"]));?>');</script>
+                <script type="text/javascript">startTime.push('<?php print(Helpers::getDateNow($autobusLine->activeDrives[$counter]["startTime"]));?>');</script>
+              </div>
             </div>
-          </div>
+
+          <?php } else { ?>
+            <div class="card-footer bg-white text-muted">
+            <p class="text-muted float-left"><?php print($autobusLine->activeDrives[$counter]["stopTime"]); ?></p><p class="text-muted float-right"><?php print($autobusLine->activeDrives[$counter]["startTime"]); ?></p><br>
+            <div class="progress progress justify-content-end">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax=""></div>
+                <!-- <script src="asts/javaScript/progressBar.js"></script> -->
+                <script type="text/javascript">stopTime.push('<?php print(Helpers::getDateNow($autobusLine->activeDrives[$counter]["stopTime"]));?>');</script>
+                <script type="text/javascript">startTime.push('<?php print(Helpers::getDateNow($autobusLine->activeDrives[$counter]["startTime"]));?>');</script>
+              </div>
+            </div>
+          <?php } ?>
+
         <?php } ?>
-      
-        
-        <!--
-        <div class="card-footer bg-white text-muted">
-          <p class="text-muted float-left"><?php /*print($autobusLine->startTime); ?></p><p class="text-muted float-right"><?php print($autobusLine->stopTime); ?></p><br>
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax=""></div>
-              <script type="text/javascript">var stopTime='<?php print(Helpers::getDateNow($autobusLine->stopTime));?>';</script>
-              <script type="text/javascript">var startTime='<?php print(Helpers::getDateNow($autobusLine->startTime)); */?>';</script>
-              <script src="asts/javaScript/progressBar.js"></script>
-            </div>
-          </div>
-          -->
+
       <?php } elseif(($autobusLine->nextDrive) != false) { ?>
               
         <p class="card-text">List of all autobus drives:</p>

@@ -69,8 +69,8 @@
 
         //CUSTOM
 
-        //Metoda za traženje dali postoji sljedeća vožnja za proslijeđeni id autobusne linije i trenutnog vremena, ako nema
-        //vrati false ako ima nadodaj i trenutni datum na to vrijeme i vrati ga
+        /*Metoda za traženje dali postoji sljedeća vožnja za proslijeđeni id autobusne linije i trenutnog vremena, ako nema
+            vrati false ako ima nadodaj i trenutni datum na to vrijeme i vrati ga*/
         public static function getNextScheduledDrive($autobusLineId){
             date_default_timezone_set("Europe/Sarajevo");
             $timeNow = date( "H:i:s", time());
