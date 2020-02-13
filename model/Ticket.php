@@ -1,5 +1,5 @@
 <?php
-    class Ticket{
+    class Ticket extends Controller{
         private $_id;
         private $_accountId;
         private $_scheduleId;
@@ -92,6 +92,23 @@
 
         public function setPrice($price){
             $this->_price = $price;
+        }
+
+        public static function getAllUserTickets(){
+            $id = Login::decryptSessionId();
+
+            $query = self::$database_instance->getConnection()->prepare("SELECT a.account_name AS accountName, s.start_time AS startTime, s.stop_time AS stopTime, s.direction, al.start, al.stop, sldeparture.ID AS departure, sldestination.id AS destination, t.purchased, t.valid_date AS validDate
+                                                                        FROM ticket AS t
+                                                                        INNER JOIN account as a ON a.id = t.account_id
+                                                                        INNER JOIN schedule AS s ON s.id = t.schedule_id
+                                                                        INNER JOIN autobus_line as al ON al.id = t.autobusline_id
+                                                                        INNER JOIN stops_line as sldeparture ON sldeparture.id = t.departure
+                                                                        INNER JOIN stops_line as sldestination ON sldestination.id = t.destination
+                                                                        WHERE t.account_id = ? AND t.valid_date > NOW()");
+            $query->execute([intval($id)]);
+            
+            return $query->fetchAll(PDO::FETCH_OBJ);
+
         }
     }
 ?>

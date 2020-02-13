@@ -51,21 +51,20 @@
           <p><?php print($_GET["success"]); ?></p>
         </div>
       <?php } ?>
-<div class="card-body">
-  <p class="form-control">Username: <?php print($account->getAccountName()); ?></p>
-  <p class="form-control">Name: <?php print($account->getName()); ?></p>
-  <p class="form-control">Last name: <?php print($account->getlastname()); ?></p>
-  <p class="form-control">E-mail address: <?php print($account->getEmail()); ?></p>
-  <p class="form-control">Phone Number: <?php print($account->getPhoneNumber()); ?></p>
-  <div class="float-right my-3">
-    <a href="index.php?controller=Settings&method=index"><button class="btn btn-outline-primary">Change</button></a>
-  </div>
-</div>
-
-
-          
-      
+      <div class="card-body">
+        <p class="form-control">Username: <?php print($account->getAccountName()); ?></p>
+        <p class="form-control">Name: <?php print($account->getName()); ?></p>
+        <p class="form-control">Last name: <?php print($account->getlastname()); ?></p>
+        <p class="form-control">E-mail address: <?php print($account->getEmail()); ?></p>
+        <p class="form-control">Phone Number: <?php print($account->getPhoneNumber()); ?></p>
+        <div class="float-right my-3">
+          <a href="index.php?controller=Settings&method=index"><button class="btn btn-outline-primary">Change</button></a>
+        </div>
+      </div>
     </div>
+    <div class="card-footer">
+    <a href="index.php?controller=ActiveTickets&method=index"><button class="btn btn-outline-primary col-12">View active tickets</button></a>
+  </div>
   </div>
 </div>
 
