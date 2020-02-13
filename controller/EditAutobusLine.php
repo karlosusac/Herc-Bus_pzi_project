@@ -60,11 +60,11 @@
         //Brisanje autobusne linije
         public function deleteAutobusLine(){
             if(isset($_SESSION["id"])){
-                Login::check_login();
+                Login::check_login();$query = self::$database_instance->getConnection()->prepare("DELETE FROM autobus_line
+                                                                                    WHERE id = ?");
                 if(Login::$account->getAdmin() == 1){
                     if($autobusLine = AutobusLine::checkIfAutobusLineExists($_GET["autobusLineId"])){
-                        $query = self::$database_instance->getConnection()->prepare("DELETE FROM autobus_line
-                                                                                    WHERE id = ?");
+                        
                         $query->execute([intval($_GET["autobusLineId"])]);
                         header("Location: index.php?controller=Schedule&method=index&success=Successfully deleted!");
                     } else {

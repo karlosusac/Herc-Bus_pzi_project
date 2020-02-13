@@ -128,5 +128,9 @@
   html{
     scroll-behavior: smooth;
   }
+  .form-control{
+    text-align: center;
+    color: dimgrey;
+  }
 
   

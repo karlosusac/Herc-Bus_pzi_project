@@ -35,7 +35,7 @@
                                     <p><?php echo $error; ?></p>
                                 </div>
                             <?php } ?>
-                            <form action="index.php?controller=register&metoda=index" onsubmit="return validateForm(isPassOk)" method="POST">
+                            <form action="index.php?controller=register&metod=index" onsubmit="return validateForm(isPassOk)" method="POST">
                                 <div class="form-group row">
                                     <label for="accountName" class="col-md-4 col-form-label text-md-right">Username:*</label>
                                     <div class="col-md-6">
@@ -90,7 +90,7 @@
                                     </button>
                                 </div>
                                 <div class="form-group row">
-                                    <p class="col-md-12 col-form-label text-md-left">Have an account? <a href="index.php?controller=login&method=index">Log in</a></p>
+                                    <p class="col-md-12 col-form-label text-md-left">Have an account? <a href="index.php?controller=Login&method=index">Log in</a></p>
                                 </div>
                             </form>
                         </div>

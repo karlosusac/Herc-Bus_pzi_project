@@ -19,11 +19,11 @@
       </li>
       <?php if(isset($_SESSION["id"])){ ?>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?php print($accountName); ?> </a>
-        
+        <a class="nav-link dropdown-toggle" href="index.php?controller=Frontpage&method=index" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?php print($accountName); ?> </a>
+        <!--relociranje na lokaciju profil -->
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Profile</a>
-          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="index.php?controller=Profile&method=index">Profile</a>
+          <a class="dropdown-item" href="index.php?controller=Settings&method=index">Settings</a>
           <a class="dropdown-item" href="index.php?controller=Frontpage&method=logout">Log out</a>
         </div>
       </li>

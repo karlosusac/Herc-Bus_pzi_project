@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2020 at 09:39 PM
+-- Generation Time: Feb 04, 2020 at 11:56 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -132,7 +132,8 @@ INSERT INTO `session_id` (`id`, `login_date`, `token`, `account_id`) VALUES
 (204, '2020-01-16 09:18:24', '274ad4786c3abca69fa097b85867d9a4bafebf4d94ccfe0e4913e9e8e2d51e05', 14),
 (205, '2020-01-16 11:26:33', 'eae27d77ca20db309e056e3d2dcd7d69bafebf4d94ccfe0e4913e9e8e2d51e05', 14),
 (206, '2020-01-16 19:05:41', '7eabe3a1649ffa2b3ff8c02ebfd5659f2513ab9e78e8dcb0857bde1ad4612f61', 14),
-(207, '2020-01-16 21:35:27', '69adc1e107f7f7d035d7baf04342e1ca81c69420d3496e89430202205ddd99e1', 14);
+(207, '2020-01-16 21:35:27', '69adc1e107f7f7d035d7baf04342e1ca81c69420d3496e89430202205ddd99e1', 14),
+(208, '2020-02-03 23:27:04', '091d584fced301b442654dd8c23b3fc9bafebf4d94ccfe0e4913e9e8e2d51e05', 14);
 
 -- --------------------------------------------------------
 
@@ -213,6 +214,13 @@ CREATE TABLE `ticket` (
   `purchased` datetime NOT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `ticket`
+--
+
+INSERT INTO `ticket` (`ID`, `account_id`, `schedule_id`, `autobusline_id`, `departure`, `destination`, `valid_date`, `purchased`, `price`) VALUES
+(56, 14, 76, 27, 132, 128, '2020-02-14', '2020-02-03 23:28:00', 0);
 
 --
 -- Indexes for dumped tables
@@ -298,7 +306,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT for table `session_id`
 --
 ALTER TABLE `session_id`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
 
 --
 -- AUTO_INCREMENT for table `stops`
@@ -316,7 +324,7 @@ ALTER TABLE `stops_line`
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- Constraints for dumped tables

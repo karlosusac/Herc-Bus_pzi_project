@@ -1,6 +1,6 @@
 <?php
 
-class Account {
+class Account extends Controller{
     private $_id;
     private $_accountName;
     private $_name;
@@ -86,5 +86,50 @@ class Account {
 
     public function setAdmin($admin) {
         $this->_admin = $admin;
+    }
+
+    public static function areEmailAndUsernameOccupied($email, $username){
+        $query = self::$database_instance->getConnection()->prepare("SELECT id 
+                                                                    FROM account
+                                                                    WHERE e_mail = ? OR account_name = ?");
+        $query->execute([$email, $username]);
+        $results = $query->fetchAll();
+        
+        if(empty($results)){
+            return true;
+        } else {
+            $isFirstValueMine = false;
+            $isSecondValueMine = false;
+           
+
+            if(count($results[0]) == 2){
+                //var_dump($results);
+                if($results[0][0] == Login::decryptSessionId($_SESSION["id"])){
+                    $isFirstValueMine = true;
+                }
+
+                if($results[0]["id"] == Login::decryptSessionId($_SESSION["id"])){
+                    $isSecondValueMine = true;
+                }
+
+                if($isFirstValueMine == true && $isSecondValueMine == true){
+                    var_dump("True");
+                    return true;
+                }
+
+            } else {
+                if($results[0][0] == Login::decryptSessionId($_SESSION["id"])){
+                    //var_dump($results);
+                    $isFirstValueMine = true;
+                }
+
+                if($isFirstValueMine == true){
+                    var_dump("True");
+                    return true;
+                }
+            }
+
+            //return false;
+        }
     }
 }
