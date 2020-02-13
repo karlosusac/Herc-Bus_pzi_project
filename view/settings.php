@@ -31,9 +31,9 @@
 </nav>
 
 <div class="container mt-5">
-  <div class="card shadow">
-    <div class="card-header d-flex justify-content-center bg-dark">
-      <h1 class="text-light">Settings:</h1>
+  <div class="card shadow" data-aos="fade-down" data-aos-easing="ease-in-out" data-aos-duration="500">
+    <div class="card-header mb-3 d-flex justify-content-center bg-dark">
+      <h3 class="text-light">Settings:</h3>
     </div>
     
 
@@ -49,7 +49,7 @@
           <label class="d-flex justify-content-center text-muted">Change Phone number: </label>
           <input class="form-control" type="name" name="chngPhoneNumber" value="<?php print($account->getPhoneNumber()); ?>" >
           <label class="d-flex justify-content-center text-muted">Enter your password to confirm: </label>
-          <input class="form-control" type="password" name="chngPassword">
+          <input class="form-control" type="password" name="chngPassword" required>
           
           <div class="container">
           <div class="float-right my-3">

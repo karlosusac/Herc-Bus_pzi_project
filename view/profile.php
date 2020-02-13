@@ -32,26 +32,27 @@
 <div class="container mt-5">
   <div class="card shadow">
     <div class="card-header d-flex justify-content-center bg-dark">
-    <h1 class="text-light" type="name" name="chngUserName" >Welcome to your profile <?php print($account->getAccountName()); ?>!</h1>
+    <h3 class="text-light" type="name" name="chngUserName" >Welcome to your profile <?php print($account->getAccountName()); ?>!</h3>
     </div>
     <div class="card-body">
       <?php if(isset($_GET["error"])){ ?>
-        <div class="alert alert-danger text-center">
+        <div class="alert alert-danger text-center" data-aos="fade-up" data-aos-delay="600">
           <strong>Error:</strong>
           <p><?php print($_GET["error"]); ?></p>
         </div>
       <?php } else if(isset($_GET["success"])){ ?>
-        <div class="alert alert-success text-center">
+        <div class="alert alert-success text-center" data-aos="fade-up" data-aos-delay="600">
            <strong>Success:</strong>
           <p><?php print($_GET["success"]); ?></p>
         </div>
 
       <?php } ?>
-<div class="card-body">
-  <h1 class="form-control">Name: <?php print($account->getName()); ?></h1>
-  <h1 class="form-control">Last name: <?php print($account->getlastname()); ?></h1>
-  <h1 class="form-control">E-mail address: <?php print($account->getEmail()); ?></h1>
-  <h1 class="form-control">Phone Number: <?php print($account->getPhoneNumber()); ?></h1>
+<div class="card-body" data-aos="fade-down" data-aos-easing="ease-in-out" data-aos-duration="500">
+  <p class="form-control">Username: <?php print($account->getAccountName()); ?></p>
+  <p class="form-control">Name: <?php print($account->getName()); ?></p>
+  <p class="form-control">Last name: <?php print($account->getlastname()); ?></p>
+  <p class="form-control">E-mail address: <?php print($account->getEmail()); ?></p>
+  <p class="form-control">Phone Number: <?php print($account->getPhoneNumber()); ?></p>
   <div class="float-right my-3">
     <a href="index.php?controller=Settings&method=index"><button class="btn btn-outline-primary">Change</button></a>
   </div>

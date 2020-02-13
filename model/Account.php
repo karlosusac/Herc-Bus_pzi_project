@@ -91,45 +91,67 @@ class Account extends Controller{
     public static function areEmailAndUsernameOccupied($email, $username){
         $query = self::$database_instance->getConnection()->prepare("SELECT id 
                                                                     FROM account
-                                                                    WHERE e_mail = ? OR account_name = ?");
-        $query->execute([$email, $username]);
-        $results = $query->fetchAll();
+                                                                    WHERE e_mail = ?");
+        $query->execute([$email]);
+        $id1 = $query->fetch(PDO::FETCH_OBJ);
+
+        $query = self::$database_instance->getConnection()->prepare("SELECT id 
+                                                                    FROM account
+                                                                    WHERE account_name = ?");
+        $query->execute([$username]);
+        $id2 = $query->fetch(PDO::FETCH_OBJ);
         
-        if(empty($results)){
+        if(empty($id1->id) && empty($id2->id)){
+            var_dump("Prošlo bez problema");
+            die();
             return true;
+
         } else {
             $isFirstValueMine = false;
             $isSecondValueMine = false;
            
 
-            if(count($results[0]) == 2){
-                //var_dump($results);
-                if($results[0][0] == Login::decryptSessionId($_SESSION["id"])){
+            if(!empty($id1->id) && !empty($id2->id)){
+                if($id1->id == Login::decryptSessionId($_SESSION["id"])){
                     $isFirstValueMine = true;
                 }
 
-                if($results[0]["id"] == Login::decryptSessionId($_SESSION["id"])){
+                if($id2->id == Login::decryptSessionId($_SESSION["id"])){
                     $isSecondValueMine = true;
                 }
 
                 if($isFirstValueMine == true && $isSecondValueMine == true){
-                    var_dump("True");
+                    
                     return true;
                 }
 
             } else {
-                if($results[0][0] == Login::decryptSessionId($_SESSION["id"])){
-                    //var_dump($results);
-                    $isFirstValueMine = true;
+                if(!empty($id1->id) && empty($id2->id)){
+                    if($id1->id == Login::decryptSessionId($_SESSION["id"])){
+                        $isFirstValueMine = true;
+                    }
+                } else {
+                    if($id2->id == Login::decryptSessionId($_SESSION["id"])){
+                        $isFirstValueMine = true;
+                    }
                 }
 
                 if($isFirstValueMine == true){
-                    var_dump("True");
+                    
                     return true;
                 }
             }
 
-            //return false;
+            return false;
         }
+    }
+    public static function updateAccountInfo($username, $firstName, $lastName, $email, $phoneNumber){
+        $id = Login::decryptSessionId();
+
+        $query = self::$database_instance->getConnection()->prepare("UPDATE account SET account_name = ?, name = ?, lastname = ?, e_mail = ?, phone_number = ? 
+                                                                    WHERE id = ?");
+        $query->execute([$username, $firstName, $lastName, $email, $phoneNumber, intval($id)]);
+
+        return true;
     }
 }

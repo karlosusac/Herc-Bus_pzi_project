@@ -71,7 +71,6 @@
             <script src="asts/javaScript/progressBar.js"></script>
             <div class="progress">
               <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax=""></div>
-                <!-- <script src="asts/javaScript/progressBar.js"></script> -->
                 <script type="text/javascript">stopTime.push('<?php print(Helpers::getDateNow($autobusLine->activeDrives[$counter]["stopTime"]));?>');</script>
                 <script type="text/javascript">startTime.push('<?php print(Helpers::getDateNow($autobusLine->activeDrives[$counter]["startTime"]));?>');</script>
               </div>
@@ -82,7 +81,6 @@
             <p class="text-muted float-left"><?php print($autobusLine->activeDrives[$counter]["stopTime"]); ?></p><p class="text-muted float-right"><?php print($autobusLine->activeDrives[$counter]["startTime"]); ?></p><br>
             <div class="progress progress justify-content-end">
               <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax=""></div>
-                <!-- <script src="asts/javaScript/progressBar.js"></script> -->
                 <script type="text/javascript">stopTime.push('<?php print(Helpers::getDateNow($autobusLine->activeDrives[$counter]["stopTime"]));?>');</script>
                 <script type="text/javascript">startTime.push('<?php print(Helpers::getDateNow($autobusLine->activeDrives[$counter]["startTime"]));?>');</script>
               </div>

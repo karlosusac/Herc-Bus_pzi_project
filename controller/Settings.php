@@ -6,8 +6,9 @@
 
             if(isset($_SESSION["id"])){
                 $this->load("headerAndFooterMain/header", "view");
-                $this->load("settings", "view", array("account" => Login::$account));
                 $this->load("headerAndFooterMain/footer", "view");
+                $this->load("settings", "view", array("account" => Login::$account));
+                
                 die();
             }
         }
@@ -21,15 +22,16 @@
                     if(!($_POST["chngUserName"] == "") && !($_POST["chngFirstName"] == "") && !($_POST["chngLastName"] == "") && !($_POST["chngEmail"] == "")){
                         
                         if(Account::areEmailAndUsernameOccupied($_POST["chngEmail"], $_POST["chngUserName"])){
-                            header("Location: index.php?controller=Profile&method=index&success=Account successfully updated!");
-                            
+                            if(Account::updateAccountInfo($_POST["chngUserName"], $_POST["chngFirstName"], $_POST["chngLastName"], $_POST["chngEmail"], $_POST["chngPhoneNumber"])){
+                                header("Location: index.php?controller=Profile&method=index&success=Account successfully updated!");
+                            } 
                         } else {
-                            header("Location: index.php?controller=Frontpage&method=index");
+                            header("Location: index.php?controller=Profile&method=index&error=Username and/or e-mail alredy exists");
                             
                         }
                     }
                 } else {
-                    header("Location: index.php?controller=Settings&method=index&error=Incorrect password");
+                    header("Location: index.php?controller=Profile&method=index&error=Incorrect password");
                 }
                 
             }
