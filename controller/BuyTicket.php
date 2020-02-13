@@ -52,7 +52,7 @@
                         $ticket->setPrice(self::calculatePrice($ticket->getDestination(), $ticket->getDeparture()));
 
                         $this->load("headerAndFooterMain/header", "view");
-                        $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "ticket" => $ticket));
+                        $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "ticket" => $ticket, "account" => Login::$account));
                         $this->load("headerAndFooterMain/footer", "view");
                     }
 
@@ -68,7 +68,7 @@
                     $schedule = SingleSchedule::getAllSchedulesForASingleAutobusLine($_GET["autobusLine"], StopsLine::compareStops($_GET["destination"], $_GET["departure"]));
 
                     $this->load("headerAndFooterMain/header", "view");
-                    $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "schedule" => $schedule));
+                    $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "schedule" => $schedule, "account" => Login::$account));
                     $this->load("headerAndFooterMain/footer", "view");
                     die();
 
@@ -79,7 +79,7 @@
                         $stops = StopsLine::getRestOfStops($_GET["autobusLine"], $_GET["destination"]);
 
                         $this->load("headerAndFooterMain/header", "view");
-                        $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stops));
+                        $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stops, "account" => Login::$account));
                         $this->load("headerAndFooterMain/footer", "view");
                         die();
                     }
@@ -88,13 +88,13 @@
                     $stops = StopsLine::getAllStopsForASingleAutobusLine($_GET["autobusLine"]);
 
                     $this->load("headerAndFooterMain/header", "view");
-                    $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stops));
+                    $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stops, "account" => Login::$account));
                     $this->load("headerAndFooterMain/footer", "view");
                     die();
 
                 } else {
                     $this->load("headerAndFooterMain/header", "view");
-                    $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => AutobusLine::getAllLines()));
+                    $this->load("buyTicket", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => AutobusLine::getAllLines(), "account" => Login::$account));
                     $this->load("headerAndFooterMain/footer", "view");
                     die();
                 }

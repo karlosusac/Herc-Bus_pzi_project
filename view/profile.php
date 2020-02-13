@@ -20,17 +20,22 @@
         <a class="nav-link dropdown-toggle" href="index.php?controller=Profile&method=index" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?php print($account->getAccountName()); ?> </a>
         
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="index.php?controller=Profile&method=index">Profile</a>
+        <a class="dropdown-item" href="index.php?controller=Profile&method=index">Profile</a>
           <a class="dropdown-item" href="index.php?controller=Settings&method=index">Settings</a>
-          <a class="dropdown-item" href="index.php?controller=Schedule&method=logout">Log out</a>
+          <a class="dropdown-item" href="index.php?controller=ChangePassword&method=index">Change password</a>
+          <?php if($account->getAdmin() == 1){ ?>
+            <a class="dropdown-item" href="index.php?controller=AddAdminAccount&method=index">New admin account</a>
+          <?php } ?>          
+          <a class="dropdown-item" href="index.php?controller=Frontpage&method=logout">Log out</a>
         </div>
       </li>
       <?php } ?>
     </ul>
   </div>
 </nav>
+
 <div class="container mt-5">
-  <div class="card shadow">
+  <div class="card shadow" data-aos="fade-down" data-aos-easing="ease-in-out" data-aos-duration="500">
     <div class="card-header d-flex justify-content-center bg-dark">
     <h3 class="text-light" type="name" name="chngUserName" >Welcome to your profile <?php print($account->getAccountName()); ?>!</h3>
     </div>
@@ -45,9 +50,8 @@
            <strong>Success:</strong>
           <p><?php print($_GET["success"]); ?></p>
         </div>
-
       <?php } ?>
-<div class="card-body" data-aos="fade-down" data-aos-easing="ease-in-out" data-aos-duration="500">
+<div class="card-body">
   <p class="form-control">Username: <?php print($account->getAccountName()); ?></p>
   <p class="form-control">Name: <?php print($account->getName()); ?></p>
   <p class="form-control">Last name: <?php print($account->getlastname()); ?></p>

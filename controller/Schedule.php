@@ -7,7 +7,7 @@
                 Login::check_login();
 
                 $this->load("headerAndFooterMain/header", "view");
-                $this->load("schedule", "view", array("accountName" => Login::$account->getAccountName(), "admin" => Login::$account->getAdmin(), "autobusLine" => AutobusLine::getAllLines()));
+                $this->load("schedule", "view", array("accountName" => Login::$account->getAccountName(), "admin" => Login::$account->getAdmin(), "autobusLine" => AutobusLine::getAllLines(), "account" => Login::$account));
                 $this->load("headerAndFooterMain/footer", "view");
             } else {
 

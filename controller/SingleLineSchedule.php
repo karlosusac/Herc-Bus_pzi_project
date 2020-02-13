@@ -10,7 +10,7 @@
                         Login::check_login();
             
                         $this->load("headerAndFooterMain/header", "view");
-                        $this->load("singleLineSchedule", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $autobusLine));
+                        $this->load("singleLineSchedule", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $autobusLine, "account" => Login::$account));
                         $this->load("headerAndFooterMain/footer", "view");
                         die();
                     } else {

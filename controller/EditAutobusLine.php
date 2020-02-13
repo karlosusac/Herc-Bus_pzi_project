@@ -48,7 +48,7 @@
                         $autobusLineArray = (json_encode($autobusLineArray));
 
                         $this->load("headerAndFooterMain/header", "view");
-                        $this->load("editAutobusLine", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $this->_autobusLine, "stops" => $stopsArray, "autobusLineId" => $autobusLineArray));
+                        $this->load("editAutobusLine", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $this->_autobusLine, "stops" => $stopsArray, "autobusLineId" => $autobusLineArray, "account" => Login::$account));
                         $this->load("headerAndFooterMain/footer", "view");
                         die();
                     }

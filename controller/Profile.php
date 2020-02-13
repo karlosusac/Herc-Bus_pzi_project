@@ -7,7 +7,7 @@
             if(isset($_SESSION["id"])){
                 $this->load("headerAndFooterMain/header", "view");
                 $this->load("headerAndFooterMain/footer", "view");
-                $this->load("profile", "view", array("account" => Login::$account));
+                $this->load("profile", "view", array("account" => Login::$account, "account" => Login::$account));
                 
                 die();
             }

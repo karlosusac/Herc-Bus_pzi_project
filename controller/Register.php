@@ -37,7 +37,7 @@
 
                     //Te ga na kraju šaljemo na frontpage, sa korisničkim podacima
                     $this->load("headerAndFooterMain/header", "view");
-                    $this->load("frontpage", "view", array("accountName" => $account->getAccountName()));
+                    $this->load("frontpage", "view", array("accountName" => $account->getAccountName(), "account" => Login::$account));
                     $this->load("headerAndFooterMain/footer", "view");
 
                 } catch (Exception $exception){

@@ -21,8 +21,10 @@ class Login extends Controller {
                 //Ako je sve ok, onda šaljemo user-a na frontpage sa svojim podacima
                 self::loginUser($account);
 
+                Login::check_login();
+
                 $this->load("headerAndFooterMain/header", "view");
-                $this->load("frontpage", "view", array("accountName" => $account->getAccountName()));
+                $this->load("frontpage", "view", array("accountName" => $account->getAccountName(), "account" => Login::$account));
                 $this->load("headerAndFooterMain/footer", "view");
 
             } catch (Exception $exception) {

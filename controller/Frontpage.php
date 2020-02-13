@@ -26,7 +26,7 @@
     
                 //Load metode kojim učitavamo header,footer i željeni content, te također proslijeđivamo informacije o user-u
                 $this->load("headerAndFooterMain/header", "view");
-                $this->load("frontpage", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stopsArray));
+                $this->load("frontpage", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stopsArray, "account" => Login::$account));
                 $this->load("headerAndFooterMain/footer", "view");
             } else {
                 $this->load("headerAndFooterMain/header", "view");

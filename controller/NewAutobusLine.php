@@ -46,7 +46,7 @@
                         $array = (json_encode($array));
 
                         $this->load("headerAndFooterMain/header", "view");
-                        $this->load("newAutobusLineSchedule", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $this->autobusLine, "array" => $array));
+                        $this->load("newAutobusLineSchedule", "view", array("accountName" => Login::$account->getAccountName(), "autobusLine" => $this->autobusLine, "array" => $array, "account" => Login::$account));
                         $this->load("headerAndFooterMain/footer", "view");
                         die();
                     }
@@ -68,7 +68,7 @@
                     
 
                     $this->load("headerAndFooterMain/header", "view");
-                    $this->load("newAutobusLine", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stopsArray));
+                    $this->load("newAutobusLine", "view", array("accountName" => Login::$account->getAccountName(), "stops" => $stopsArray, "account" => Login::$account));
                     $this->load("headerAndFooterMain/footer", "view");
                     die();
                 }

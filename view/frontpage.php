@@ -24,6 +24,10 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=Profile&method=index">Profile</a>
           <a class="dropdown-item" href="index.php?controller=Settings&method=index">Settings</a>
+          <a class="dropdown-item" href="index.php?controller=ChangePassword&method=index">Change password</a>
+          <?php if($account->getAdmin() == 1){ ?>
+            <a class="dropdown-item" href="index.php?controller=AddAdminAccount&method=index">New admin account</a>
+          <?php } ?>          
           <a class="dropdown-item" href="index.php?controller=Frontpage&method=logout">Log out</a>
         </div>
       </li>
