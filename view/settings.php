@@ -65,5 +65,7 @@
   </div>
 </div>
 
+<br><br><br>
+
 
 <script src="asts/javaScript/registerPasswordValidation.js">
