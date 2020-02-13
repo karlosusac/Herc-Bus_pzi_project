@@ -154,4 +154,13 @@ class Account extends Controller{
 
         return true;
     }
+
+    public function updateAccountPassword($password){
+        $id = Login::decryptSessionId();
+
+        $query = self::$database_instance->getConnection()->prepare("UPDATE account SET password = ?
+                                                                    WHERE id = ?");
+        $query->execute([$password, intval($id)]);
+        return true;
+    }
 }

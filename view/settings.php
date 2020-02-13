@@ -22,6 +22,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=Profile&method=index">Profile</a>
           <a class="dropdown-item" href="index.php?controller=Settings&method=index">Settings</a>
+          <a class="dropdown-item" href="index.php?controller=ChangePassword&method=index">Change password</a>
           <a class="dropdown-item" href="index.php?controller=Schedule&method=logout">Log out</a>
         </div>
       </li>
@@ -33,7 +34,7 @@
 <div class="container mt-5">
   <div class="card shadow" data-aos="fade-down" data-aos-easing="ease-in-out" data-aos-duration="500">
     <div class="card-header mb-3 d-flex justify-content-center bg-dark">
-      <h3 class="text-light">Settings:</h3>
+      <h3 class="text-light">Settings</h3>
     </div>
     
 
@@ -54,13 +55,8 @@
           <div class="container">
           <div class="float-right my-3">
           <a href="index.php?controller=Profile&method=index"><button type="submit" class="btn btn-outline-success">Confirm</button>
-          </div>
-
-          <div class="float-left my-3">
-            <a href="index.php?controller=ChangePassword&method=index"><button class="btn btn-outline-primary">Change password</button></a>
-          </div>
+          </div>          
         </div>
-          
       </form>
     </div>
   </div>

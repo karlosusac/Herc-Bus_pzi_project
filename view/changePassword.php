@@ -35,4 +35,37 @@
 </nav>
 
 
+<div class="container mt-5">
+  <div class="card shadow" data-aos="fade-down" data-aos-easing="ease-in-out" data-aos-duration="500">
+    <div class="card-header mb-3 d-flex justify-content-center bg-dark">
+      <h3 class="text-light">Change Password</h3>
+    </div>
+    
+
+    <div class="card-body">
+      <form action="index.php?controller=ChangePassword&method=changeAccountPassword" method="POST" onsubmit="return validateForm(isPassOk)">
+          <label class="d-flex justify-content-center text-muted">Enter new password: </label>
+          <input class="form-control" type="password" name="password" required onkeyup="isPassOk()">
+
+          <label class="d-flex justify-content-center text-muted">Confirm new password: </label>
+          <input class="form-control" type="password" name="conPassword" required onkeyup="isPassOk()">
+          
+          <label class="d-flex justify-content-center text-muted">Enter your previous password: </label>
+          <input class="form-control" type="password" name="oldPassword" required>
+        
+          <div class="container">
+            <div class="float-right my-3">
+              <a href="index.php?controller=Profile&method=index"><button type="submit" class="btn btn-outline-success">Change</button>
+            </div>          
+        </div>
+      </form>
+    <div>
+    </div>
+  </div>
+</div>
+
+<script src="asts/javaScript/registerPasswordValidation.js"></script>
+
+
+
 

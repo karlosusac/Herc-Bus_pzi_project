@@ -35,11 +35,7 @@
                                     <p><?php echo $error; ?></p>
                                 </div>
                             <?php } ?>
-<<<<<<< HEAD
-                            <form action="index.php?controller=register&metod=index" onsubmit="return validateForm(isPassOk)" method="POST">
-=======
                             <form action="index.php?controller=Register&method=index" onsubmit="return validateForm(isPassOk)" method="POST">
->>>>>>> ad07c60e3a322647682401c87d6bfea4aae08345
                                 <div class="form-group row">
                                     <label for="accountName" class="col-md-4 col-form-label text-md-right">Username:*</label>
                                     <div class="col-md-6">
