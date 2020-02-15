@@ -2,13 +2,16 @@
     class ChangePassword extends Controller{
         public static $account;
             public function index(){
-                Login::check_login();
 
                 if(isset($_SESSION["id"])){
+                    Login::check_login();
+
                     $this->load("headerAndFooterMain/header", "view");
                     $this->load("headerAndFooterMain/footer", "view");
                     $this->load("changePassword", "view", array("account" => Login::$account));
                     die();
+                } else {
+                    header("Location: index.php?controller=Frontpage&method=index");
                 }
             }
 
@@ -33,6 +36,8 @@
                     } else {
                         header("Location: index.php?controller=Profile&method=index&error=Incorrect password");
                     }
+                } else {
+                    header("Location: index.php?controller=Frontpage&method=index");
                 }
             }
     }

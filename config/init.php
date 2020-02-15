@@ -6,10 +6,10 @@
     }
 
     //Konstante (podaci) koji se koriste prilikom spajanja sa bazom podataka
-    define("DB_HOST", "127.0.0.1");
+    define("DB_HOST", "localhost");
     define("DB_USER", "root");
     define("DB_PASS", "");
-    define("DB_DATABASE", "herc-bus_database");
+    define("DB_DATABASE", "fpmoz032019");
 
     // -------------------------- Gibs an error for some reason when called, need to look into it --------------------------
     //Absolute path do folder-a ali nije baš praktično za koristiti, moguće da je završtiti u smeću

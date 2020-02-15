@@ -35,6 +35,8 @@
                     //Zatim spremamo id u sessiju unesenog user-a
                     Login::loginUser($account);
 
+                    Login::check_login();
+
                     //Te ga na kraju šaljemo na frontpage, sa korisničkim podacima
                     $this->load("headerAndFooterMain/header", "view");
                     $this->load("frontpage", "view", array("accountName" => $account->getAccountName(), "account" => Login::$account));

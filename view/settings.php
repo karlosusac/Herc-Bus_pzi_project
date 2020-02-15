@@ -43,13 +43,13 @@
 
       <form action="index.php?controller=Settings&method=changeUserInfo" method="POST">
           <label class="d-flex justify-content-center text-muted">Change Account Name: </label>
-          <input class="form-control" type="text" name="chngUserName" value="<?php print($account->getAccountName()); ?>" >
+          <input class="form-control" type="text" name="chngUserName" value="<?php print($account->getAccountName()); ?>" required>
           <label class="d-flex justify-content-center text-muted">Change First Name: </label>
-          <input class="form-control" type="name" name="chngFirstName" value="<?php print($account->getName()); ?>" >
+          <input class="form-control" type="name" name="chngFirstName" value="<?php print($account->getName()); ?>" required>
           <label class="d-flex justify-content-center text-muted">Change Last Name: </label>
-          <input class="form-control" type="name" name="chngLastName" value="<?php print($account->getlastname()); ?>" >
+          <input class="form-control" type="name" name="chngLastName" value="<?php print($account->getlastname()); ?>" required>
           <label class="d-flex justify-content-center text-muted">Change E-mail: </label>
-          <input class="form-control" type="email" name="chngEmail" value="<?php print($account->getEmail()); ?>" >
+          <input class="form-control" type="email" name="chngEmail" value="<?php print($account->getEmail()); ?>" required>
           <label class="d-flex justify-content-center text-muted">Change Phone number: </label>
           <input class="form-control" type="name" name="chngPhoneNumber" value="<?php print($account->getPhoneNumber()); ?>" >
           <label class="d-flex justify-content-center text-muted">Enter your password to confirm: </label>
